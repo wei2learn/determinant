@@ -1,0 +1,340 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass amsart
+\begin_preamble
+
+
+\usepackage{fullpage}\usepackage{amsthm}\usepackage{stmaryrd}
+
+\@ifundefined{definecolor}
+ {\usepackage{color}}{}
+\usepackage{refstyle}\usepackage{float}\usepackage{amsthm}
+
+\usepackage{a4wide}\ifx\pdfpageheight\undefined
+   \usepackage[dvips,colorlinks=true,linkcolor=blue,citecolor=red,
+      urlcolor=green]{hyperref}\makeatletter
+   \edef\Gin@extensions{\Gin@extensions,.mps}
+   
+   \DeclareGraphicsRule{.mps}{eps}{*}{}
+   \makeatother
+\else
+   \usepackage[bookmarksopen=false,pdftex=true,breaklinks=true,
+       hyperindex=true,pdfstartview=FitH,colorlinks=true,
+      pdfpagelabels=true,colorlinks=true,linkcolor=blue,
+      citecolor=red,urlcolor=green,hypertexnames=false
+      ]{hyperref}\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\usepackage{algorithm}\usepackage{algorithmic}\floatstyle{ruled}
+\newfloat{algorithm}{tbp}{loa}
+\floatname{algorithm}{Algorithm}
+\usepackage{algorithmic}\newcommand{\forbody}[1]{ #1 \ENDFOR }
+\newcommand{\ifbody}[1]{ #1  \ENDIF}
+%\newcommand{\comment}[1]{#1}
+\newcommand{\whilebody}[1]{ #1  \ENDWHILE}
+\renewcommand{\algorithmicprint}{\textbf{draw}}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+
+
+%\newtheorem{thm}{Theorem}
+%\newtheorem{cor}{Corollary}
+%\newtheorem{prop}{Proposition}
+%\newtheorem{defn}{Definition}
+%\newtheorem{Algo}{Algorithm}
+\newtheorem{exmp}{Example}
+%\newtheorem{defn}[thm]{Definition}
+%\newtheorem{rem}{Remark}
+%\newtheorem{lem}{Lemma}
+
+
+\newenvironment{Alg}{\noindent  {\bf Algorithm} \hspace*{0.05cm}}{
+
+}\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\K}{ {\rm K}}
+\newcommand{\revCol}{ {\rm revCol}}
+\newcommand{\bigO}{\mathcal{O}}
+\newcommand{\tbigO}{\widetilde{\mathcal{O}}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\ocL}{\overline{\mathcal{L}}}
+\newcommand{\tcL}{\widetilde{\mathcal{L}}}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\oA}{\overline{A}}
+\newcommand{\GL}{{\rm GL}\,}
+\newcommand{\rank}{{\rm rank}\,}
+\newcommand{\cdeg}{{\rm cdeg}\,}
+\newcommand{\rdeg}{{\rm rdeg}\,}
+\newcommand{\diag}{{\rm diag}\,}
+\newcommand{\val}{{\rm val}\,}
+\newcommand{\ord}{{\rm ord}\,}
+\newcommand{\abs}[1]{\lvert#1\rvert}
+
+\newcommand{\Return}{\textbf{Return}}
+\newcommand{\While}{\textbf{While}}
+\newcommand{\For}{\textbf{For}}
+\newcommand{\If}{\textbf{If}}
+\newcommand{\nv}{\textbf{MatrixPolynomialInverse}}
+\newcommand{\then}{\textbf{then}}
+\newcommand{\ddo}{\textbf{do}}
+\newcommand{\edo}{\textbf{end do}}
+\newcommand{\eif}{\textbf{end if}}
+\newcommand{\cdim}{{\rm coldim}}
+\newcommand{\tO}{O^{\sim}}
+
+\def\StorjohannTransform{\qopname\relax n{StorjohannTransform}}
+\def\TransformUnbalanced{\qopname\relax n{TransformUnbalanced}}
+\def\rowDimension{\qopname\relax n{rowDimension}}
+\def\columnDimension{\qopname\relax n{columnDimension}}
+\DeclareMathOperator{\re}{rem}
+\DeclareMathOperator{\coeff}{coeff}
+\DeclareMathOperator{\lcoeff}{lcoeff}
+\DeclareMathOperator{\inv}{inverse}
+\DeclareMathOperator{\rev}{rev}
+\DeclareMathOperator{\colRev}{colRev}
+\DeclareMathOperator{\rowRev}{rowRev}
+\DeclareMathOperator{\unimodularCompletion}{unimodularCompletion}
+\DeclareMathOperator{\hermiteDiagonal}{HermiteDiagonal}
+\DeclareMathOperator{\determinant}{determinant}
+\DeclareMathOperator{\mnbr}{MinimalKernelBasisTranspose}
+\DeclareMathOperator{\mnbrp}{MinimalKernelBasisWithRankProfile}
+\DeclareMathOperator{\colBasis}{ColumnBasis}
+\DeclareMathOperator{\rankProfile}{rankProfile}
+\def\mab{\qopname\relax n{OrderBasis}}
+\def\mnbrs{\qopname\relax n{MinimalNullspacerBasisRankSensitive}}
+\def\mmab{\qopname\relax n{FastBasis}}
+\def\umab{\qopname\relax n{UnbalancedFastOrderBasis}}
+\def\mnb{\qopname\relax n{MinimalKernelBasis ~ }}
+\newcommand{\bb}{\\}
+\end_preamble
+\use_default_options false
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+algorithmics
+algorithm
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding latin9
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 2
+\use_esint 1
+\use_mhchem 0
+\use_mathdots 1
+\cite_engine natbib_authoryear
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Computing Determinant of Polynomial Matrices
+\end_layout
+
+\begin_layout Author
+Wei Zhou and George Labahn
+\end_layout
+
+\begin_layout Thanks
+Cheriton School of Computer Science, University of Waterloo, Waterloo ON,
+ Canada N2L 3G1 
+\series bold
+{w2zhou,glabahn}@uwaterloo.ca
+\end_layout
+
+\begin_layout Abstract
+Given a square, nonsingular matrix of univariate polynomials 
+\begin_inset Formula $\mathbf{F}\in\mathbb{K}[x]^{n\times n}$
+\end_inset
+
+ over a field 
+\begin_inset Formula $\mathbb{K}$
+\end_inset
+
+, we give a fast, deterministic algorithm for finding the determinant of
+ 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+ with complexity 
+\begin_inset Formula $O^{\sim}\left(n^{\omega}s\right)$
+\end_inset
+
+ where 
+\begin_inset Formula $s$
+\end_inset
+
+ is the average column degree or the average row degree of 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+.
+ Here soft-
+\begin_inset Formula $O$
+\end_inset
+
+ notation is Big-
+\begin_inset Formula $O$
+\end_inset
+
+ with log factors removed and 
+\begin_inset Formula $\omega$
+\end_inset
+
+ is the exponent of matrix multiplication.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "introduction.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "Preliminaries.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "diagonals.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "determinant.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "complexity.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "conclusion.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+bibliographystyle{plain}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%
+\backslash
+bibliographystyle{plainnat}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+bibfiles "paper"
+options "plain"
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

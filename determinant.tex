@@ -1,0 +1,211 @@
+
+\subsection{Determinant of the unimodular matrix}
+
+\prettyref{lem:firstDiagonalBlock} and \prettyref{lem:secondDiagonalBlock}
+show that the two diagonal blocks in \prettyref{eq:step1HermiteDiagonal}
+can be computed efficiently. To compute the determinant of $\mathbf{F}$
+based on \prettyref{eq:determinantFromDiagonalBlocks}, we still need
+to know the determinant of the unimodular matrix $\mathbf{U}$ that
+satisfies \prettyref{eq:UPartitioned}, or equivalently, we can also
+find out the determinant of $\mathbf{V}=\mathbf{U}^{-1}$. Note the
+computation of the diagonal blocks in $\mathbf{G}$ also gives $\mathbf{U}_{R}$,
+the right $n-k$ columns of $\mathbf{U}$, which is also a right kernel
+basis of $\mathbf{F}_{U}$. In fact, it also gives us the matrix $\mathbf{V}_{U}$
+consisting of the top $k$ rows of $\mathbf{V}$, from computing $\mathbf{G}_{1}$,
+a column basis of $\mathbf{F}_{U}$.
+\begin{lem}
+Let $k$ be the dimension of $\mathbf{G}_{1}$. The matrix $\mathbf{V}_{U}\in\mathbb{K}\left[x\right]^{k\times n}$
+satisfies $\mathbf{G}_{1}\mathbf{V}_{U}=\mathbf{F}_{U}$ if and only
+if $\mathbf{V}_{U}$ is the submatrix of $\mathbf{V}=\mathbf{U}^{-1}$
+consisting of the top $k$ rows of $\mathbf{V}$. \end{lem}
+\begin{proof}
+This can be seen from 
+\[
+\mathbf{G}\mathbf{V}=\begin{bmatrix}\mathbf{G}_{1} & 0\\
+* & \mathbf{G}_{2}
+\end{bmatrix}\begin{bmatrix}\mathbf{V}_{U}\\
+\mathbf{V}_{D}
+\end{bmatrix}=\begin{bmatrix}\mathbf{F}_{U}\\
+\mathbf{F}_{D}
+\end{bmatrix}=\mathbf{F}.
+\]
+
+\end{proof}
+While the determinant of $\mathbf{V}$ or the determinant of $\mathbf{U}$
+is needed to compute the determinant of $\mathbf{F}$, a major problem
+is that we do not know $\mathbf{U}_{L}$ or $\mathbf{V}_{D}$, which
+may not be efficiently computed due to their large degrees. This means
+we need to compute the determinant of $\mathbf{V}$ or $\mathbf{U}$
+without knowing the complete matrix $\mathbf{V}$ or $\mathbf{U}$.
+The following lemma shows how this can be done using just $\mathbf{U}_{R}$
+and $\mathbf{V}_{U}$.
+\begin{lem}
+\label{lem:scalingToDeterminant} Let $\mathbf{U}=\left[\mathbf{U}_{L},\mathbf{U}_{R}\right]$
+and $\mathbf{F}$ be as before, that is, they satisfy 
+\[
+\mathbf{F}\mathbf{U}=\begin{bmatrix}\mathbf{F}_{U}\\
+\mathbf{F}_{D}
+\end{bmatrix}\begin{bmatrix}\mathbf{U}_{L} & \mathbf{U}_{R}\end{bmatrix}=\begin{bmatrix}\mathbf{G}_{1} & 0\\
+* & \mathbf{G}_{2}
+\end{bmatrix}=\mathbf{G},
+\]
+ where the row dimension of $\mathbf{F}_{U}$, the column dimension
+of $\mathbf{U}_{L}$, and the dimension of $\mathbf{G}_{1}$ are $k$.
+Let $\mathbf{V}=\begin{bmatrix}\mathbf{V}_{U}\\
+\mathbf{V}_{D}
+\end{bmatrix}$ be the inverse of $\mathbf{U}$ with $k$ rows in $\mathbf{V}_{U}$.
+If $\mathbf{U}_{L}^{*}\in\mathbb{K}\left[x\right]^{n\times k}$ is
+a matrix such that $\mathbf{U}^{*}=\left[\mathbf{U}_{L}^{*},\mathbf{U}_{R}\right]$
+is unimodular, then 
+\[
+\det\mathbf{F}~=~\frac{\det\mathbf{G}\cdot\det\left(\mathbf{V}_{U}\mathbf{U}_{L}^{*}\right)}{\det\left(\mathbf{U}^{*}\right)}.
+\]
+\end{lem}
+\begin{proof}
+Since $\det\mathbf{F}~=~\det\mathbf{G}\cdot\det\mathbf{V}$, we just
+need to show that $\det\mathbf{V}=\det\left(\mathbf{V}_{U}\mathbf{U}_{L}^{*}\right)/\det\left(\mathbf{U}^{*}\right)$,
+which follows from 
+\begin{eqnarray*}
+\det\mathbf{V}\cdot\det\mathbf{U}^{*} & = & \det\left(\mathbf{V}\cdot\mathbf{U}^{*}\right)\\
+ & = & \det\left(\begin{bmatrix}\mathbf{V}_{U}\\
+\mathbf{V}_{D}
+\end{bmatrix}\begin{bmatrix}\mathbf{U}_{L}^{*} & \mathbf{U}_{R}\end{bmatrix}\right)\\
+ & = & \det\left(\begin{bmatrix}\mathbf{V}_{U}\mathbf{U}_{L}^{*} & 0\\
+* & I
+\end{bmatrix}\right)\\
+ & = & \det\left(\mathbf{V}_{U}\mathbf{U}_{L}^{*}\right).
+\end{eqnarray*}
+
+\end{proof}
+\prettyref{lem:scalingToDeterminant} shows that the determinant of
+$\mathbf{V}$ can be computed using $\mathbf{V}_{U}$ and $\mathbf{U}_{R}$,
+which we already know from the computation of the diagonal blocks
+in $\mathbf{G}$, and a unimodular completion of $\mathbf{U}_{R}$.
+In fact, this can be made more efficient still by noticing that the
+higher degree parts do not affect the computation.
+\begin{lem}
+\label{lem:determinantOfUnimodular}If $\mathbf{U}\in\mathbb{K}\left[x\right]^{n\times n}$
+is unimodular, then $\det\mathbf{U}=\det\left(\mathbf{U}\mod x\right)=\det\left(\mathbf{U}\left(0\right)\right)$.\end{lem}
+\begin{proof}
+Note that $\det\left(\mathbf{U}\left(\alpha\right)\right)=\left(\det\mathbf{U}\right)\left(\alpha\right)$
+for any $\alpha\in\mathbb{K}$, that is, the result is the same whether
+we do evaluation before or after computing the determinant. Taking
+$\alpha=0$, then we have 
+\[
+\det\left(\mathbf{U}\mod x\right)=\det\left(\mathbf{U}\left(0\right)\right)=\left(\det\mathbf{U}\right)\left(0\right)=\det\left(\mathbf{U}\right)\mod x=\det\mathbf{U}.
+\]
+
+\end{proof}
+This allows us to use just the degree zero coefficient matrices in
+the computation. So \prettyref{lem:scalingToDeterminant} can be improved
+as follows.
+\begin{lem}
+\label{lem:scalingToDeterminantSimplified} Let $\mathbf{F}$, $\mathbf{U}=\left[\mathbf{U}_{L},\mathbf{U}_{R}\right]$,
+and $\mathbf{V}=\begin{bmatrix}\mathbf{V}_{U}\\
+\mathbf{V}_{D}
+\end{bmatrix}$ be as before. Let $U_{R}=\mathbf{U}_{R}\mod x$, $V_{U}=\mathbf{V}_{U}\mod x$
+be the constant matrices of $\mathbf{U}_{R}$ and $\mathbf{V}_{U}$,
+respectively. If $U_{L}^{*}\in\mathbb{K}^{n\times*}$ is a matrix
+such that $U^{*}=\left[U_{L}^{*},U_{R}\right]$ is unimodular, then
+\[
+\det\mathbf{F}~=~\frac{\det\mathbf{G}\cdot\det\left(V_{U}U_{L}^{*}\right)}{\det\left(U^{*}\right)}.
+\]
+ \end{lem}
+\begin{proof}
+\prettyref{lem:determinantOfUnimodular} implies that $\det\mathbf{V}=\det V$
+and $\det\mathbf{U}^{*}=\det U^{*}$, which can be then substituted
+in the proof of \prettyref{lem:scalingToDeterminant} to obtain the
+result.\end{proof}
+\begin{rem}
+\prettyref{lem:scalingToDeterminantSimplified} requires us to compute
+$U_{L}^{*}\in\mathbb{K}^{n\times*}$ a matrix such that $U^{*}=\left[U_{L}^{*},U_{R}\right]$
+is unimodular. This can be obtained easily from the unimodular matrix
+that transforms $V_{U}$ to its reduced column echelon form computed
+using the Gauss Jordan transform algorithm from \citet{storjohann:phd2000}
+with a cost of $O\left(nm^{\omega-1}\right)$. 
+\end{rem}
+We now have all the ingredients needed for computing the determinant
+of $\mathbf{F}$. A recursive algorithm is given in \prettyref{alg:determinant},
+which computes the determinant of $\mathbf{F}$ as the product of
+the determinant of $\mathbf{V}$ and the determinant of $\mathbf{G}$.
+The determinant of $\mathbf{G}$ is computed by recursively computing
+the determinants of its diagonal blocks $\mathbf{G}_{1}$ and $\mathbf{G}_{2}$.
+
+\input{algorithmDeterminant.tex}
+\begin{example}
+Let 
+\[
+\mathbf{F}=\left[\begin{array}{rcccc}
+x & -{x}^{3} & -2\,{x}^{4} & 2x & -{x}^{2}\\
+\noalign{\medskip}1 & -1 & -2\, x & 2 & -x\\
+\noalign{\medskip}-3 & 3\,{x}^{2}+x & 2\,{x}^{2} & -\,{x}^{4}+1 & 3\, x\\
+\noalign{\medskip}0 & 1 & {x}^{2}+2\, x-2 & \,{x}^{3}+2x-2 & 0\\
+\noalign{\medskip}1 & -{x}^{2}+2 & -2\,{x}^{3}-3\, x+3 & 2x+2 & 0
+\end{array}\right]
+\]
+ working over $\mathbb{Z}_{7}[x]$. If $\mathbf{F}_{U}$ denotes the
+top three rows of $\mathbf{F}$ then a column basis 
+\[
+\mathbf{G}_{1}=\left[\begin{array}{rcr}
+x & -{x}^{3} & -2\,{x}^{4}\\
+\noalign{\medskip}1 & -1 & -2\, x\\
+\noalign{\medskip}-3 & 3\,{x}^{2}+x & 2\,{x}^{2}
+\end{array}\right]
+\]
+ and kernel basis 
+\[
+\mathbf{U}_{R}=\left[\begin{array}{rc}
+-1 & x\\
+-x^{2} & 0\\
+-3x & 0\\
+-3 & 0\\
+0 & 1
+\end{array}\right]
+\]
+ were given in Example \ref{example1}. The computation of the column
+basis also gives the right factor 
+\[
+\mathbf{V}_{U}=\left[\begin{array}{cccrr}
+1 & 0 & 0 & 2 & -x\\
+0 & 1 & 0 & 2x^{2} & 0\\
+0 & 0 & 1 & -x & 0
+\end{array}\right].
+\]
+Then 
+\[
+{U}_{R}=\left[\begin{array}{rc}
+-1 & 0\\
+0 & 0\\
+0 & 0\\
+-3 & 0\\
+0 & 1
+\end{array}\right]~\mbox{and}~~{V}_{U}=\left[\begin{array}{cccrr}
+1 & 0 & 0 & 2 & 0\\
+0 & 1 & 0 & 0 & 0\\
+0 & 0 & 1 & 0 & 0
+\end{array}\right].
+\]
+A unimodular completion of $U_{R}$ is given by 
+\[
+U_{L}^{*}=\left[\begin{array}{ccc}
+1 & 0 & 0\\
+0 & 1 & 0\\
+0 & 0 & 1\\
+0 & 0 & 0\\
+0 & 0 & 0
+\end{array}\right].
+\]
+ The determinant of $\mathbf{V}$ can then be computed as 
+\[
+\frac{\det\left(V_{U}U_{L}^{*}\right)}{\det\left(U^{*}\right)}=-\frac{1}{3}=2.
+\]
+From recursively computing the determinant of $\mathbf{G}_{1}$ and
+the determinant of $\mathbf{G}_{2}$, we obtain $\det\mathbf{G}_{1}=x^{6}-x^{4}$
+and $\det\mathbf{G}_{2}=x^{4}-x$. 
+
+Then the determinant of $\mathbf{V}$ can be computed as
+\[
+\det\mathbf{V}=\det\mathbf{V}\cdot\det\mathbf{G}_{1}\cdot\det\mathbf{G}_{2}=2\left(x^{6}-x^{4}\right)\left(x^{4}-x\right)=2x^{10}-2x^{8}-2x^{7}+2x^{5}.
+\]
+\qed \end{example}
+

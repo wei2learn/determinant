@@ -1,0 +1,44 @@
+\begin{algorithm}[t]
+\caption{$\determinant(\mathbf{F})$}
+\label{alg:determinant}
+
+\begin{algorithmic}[1]
+\REQUIRE{$\mathbf{F}\in\mathbb{K}\left[x\right]^{n\times n}$ is nonsingular.
+}
+
+\ENSURE{the determinant of $\mathbf{F}$.}
+
+\STATE{$\begin{bmatrix}\mathbf{F}_{U}\\
+\mathbf{F}_{D}
+\end{bmatrix}:=\mathbf{F}$, with $\mathbf{F}_{U}$ consists of the top $\left\lceil n/2\right\rceil $
+rows of $\mathbf{F}$;}
+
+
+
+\STATE{\textbf{if }$n=1$ \textbf{then} \textbf{return} $\mathbf{F}$; \textbf{endif};}
+
+\STATE{$\mathbf{G}_{1},\mathbf{U}_{R},\mathbf{V}_{U}:=\colBasis(\mathbf{F}_{U})$;
+(Here we make $\colBasis()$ also return the kernel basis and the
+right factor it computed.)}
+
+
+
+
+
+\STATE{$\mathbf{G}_{2}:=\mathbf{F}_{D}\mathbf{U}_{R}$;}
+
+\STATE{$U_{R}:=\mathbf{U}_{R}\mod x$; $V_{U}:=\mathbf{V}_{U}\mod x$;}
+
+\STATE{\begin{lem}
+compute $U_{L}^{*}\in\mathbb{K}^{n\times k}$ , a matrix that makes
+the matrix $U^{*}=\left[U_{L}^{*},U_{R}\right]$ unimodular;\end{lem}
+}
+
+\STATE{$d_{V}:=\det\left(V_{U}U_{L}^{*}\right)/\det(U^{*};$}
+
+\STATE{$\mathbf{d}_{G}:=\determinant(\mathbf{G}_{1})\cdot\determinant(\mathbf{G}_{2});$}
+
+\STATE{\textbf{return} $d_{V}\cdot\mathbf{d}_{1}\cdot\mathbf{d}_{2}$;}
+\end{algorithmic}
+\end{algorithm}
+

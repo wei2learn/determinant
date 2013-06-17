@@ -1,0 +1,190 @@
+%% LyX 2.0.5.1 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{amsart}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{color}
+\usepackage{verbatim}
+\usepackage{prettyref}
+\usepackage{float}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage[authoryear]{natbib}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+\floatstyle{ruled}
+\newfloat{algorithm}{tbp}{loa}
+\providecommand{\algorithmname}{Algorithm}
+\floatname{algorithm}{\protect\algorithmname}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+ \usepackage{algorithmic}
+\theoremstyle{plain}
+\newtheorem{thm}{\protect\theoremname}
+  \theoremstyle{plain}
+  \newtheorem{lem}[thm]{\protect\lemmaname}
+  \theoremstyle{definition}
+  \newtheorem{defn}[thm]{\protect\definitionname}
+  \theoremstyle{definition}
+  \newtheorem*{example*}{\protect\examplename}
+  \theoremstyle{remark}
+  \newtheorem{rem}[thm]{\protect\remarkname}
+  \theoremstyle{definition}
+  \newtheorem{example}[thm]{\protect\examplename}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+
+
+\usepackage{fullpage}\usepackage{amsthm}\usepackage{stmaryrd}
+
+\@ifundefined{definecolor}
+ {\usepackage{color}}{}
+\usepackage{refstyle}\usepackage{float}\usepackage{amsthm}
+
+\usepackage{a4wide}\ifx\pdfpageheight\undefined
+   \usepackage[dvips,colorlinks=true,linkcolor=blue,citecolor=red,
+      urlcolor=green]{hyperref}\makeatletter
+   \edef\Gin@extensions{\Gin@extensions,.mps}
+   
+   \DeclareGraphicsRule{.mps}{eps}{*}{}
+   \makeatother
+\else
+   \usepackage[bookmarksopen=false,pdftex=true,breaklinks=true,
+       hyperindex=true,pdfstartview=FitH,colorlinks=true,
+      pdfpagelabels=true,colorlinks=true,linkcolor=blue,
+      citecolor=red,urlcolor=green,hypertexnames=false
+      ]{hyperref}\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\usepackage{algorithm}\usepackage{algorithmic}\floatstyle{ruled}
+\newfloat{algorithm}{tbp}{loa}
+\floatname{algorithm}{Algorithm}
+\usepackage{algorithmic}\newcommand{\forbody}[1]{ #1 \ENDFOR }
+\newcommand{\ifbody}[1]{ #1  \ENDIF}
+%\newcommand{\comment}[1]{#1}
+\newcommand{\whilebody}[1]{ #1  \ENDWHILE}
+\renewcommand{\algorithmicprint}{\textbf{draw}}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+
+
+%\newtheorem{thm}{Theorem}
+%\newtheorem{cor}{Corollary}
+%\newtheorem{prop}{Proposition}
+%\newtheorem{defn}{Definition}
+%\newtheorem{Algo}{Algorithm}
+\newtheorem{exmp}{Example}
+%\newtheorem{defn}[thm]{Definition}
+%\newtheorem{rem}{Remark}
+%\newtheorem{lem}{Lemma}
+
+
+\newenvironment{Alg}{\noindent  {\bf Algorithm} \hspace*{0.05cm}}{
+
+}\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\K}{ {\rm K}}
+\newcommand{\revCol}{ {\rm revCol}}
+\newcommand{\bigO}{\mathcal{O}}
+\newcommand{\tbigO}{\widetilde{\mathcal{O}}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\ocL}{\overline{\mathcal{L}}}
+\newcommand{\tcL}{\widetilde{\mathcal{L}}}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\oA}{\overline{A}}
+\newcommand{\GL}{{\rm GL}\,}
+\newcommand{\rank}{{\rm rank}\,}
+\newcommand{\cdeg}{{\rm cdeg}\,}
+\newcommand{\rdeg}{{\rm rdeg}\,}
+\newcommand{\diag}{{\rm diag}\,}
+\newcommand{\val}{{\rm val}\,}
+\newcommand{\ord}{{\rm ord}\,}
+\newcommand{\abs}[1]{\lvert#1\rvert}
+
+\newcommand{\Return}{\textbf{Return}}
+\newcommand{\While}{\textbf{While}}
+\newcommand{\For}{\textbf{For}}
+\newcommand{\If}{\textbf{If}}
+\newcommand{\nv}{\textbf{MatrixPolynomialInverse}}
+\newcommand{\then}{\textbf{then}}
+\newcommand{\ddo}{\textbf{do}}
+\newcommand{\edo}{\textbf{end do}}
+\newcommand{\eif}{\textbf{end if}}
+\newcommand{\cdim}{{\rm coldim}}
+\newcommand{\tO}{O^{\sim}}
+
+\def\StorjohannTransform{\qopname\relax n{StorjohannTransform}}
+\def\TransformUnbalanced{\qopname\relax n{TransformUnbalanced}}
+\def\rowDimension{\qopname\relax n{rowDimension}}
+\def\columnDimension{\qopname\relax n{columnDimension}}
+\DeclareMathOperator{\re}{rem}
+\DeclareMathOperator{\coeff}{coeff}
+\DeclareMathOperator{\lcoeff}{lcoeff}
+\DeclareMathOperator{\inv}{inverse}
+\DeclareMathOperator{\rev}{rev}
+\DeclareMathOperator{\colRev}{colRev}
+\DeclareMathOperator{\rowRev}{rowRev}
+\DeclareMathOperator{\unimodularCompletion}{unimodularCompletion}
+\DeclareMathOperator{\hermiteDiagonal}{HermiteDiagonal}
+\DeclareMathOperator{\determinant}{determinant}
+\DeclareMathOperator{\mnbr}{MinimalKernelBasisTranspose}
+\DeclareMathOperator{\mnbrp}{MinimalKernelBasisWithRankProfile}
+\DeclareMathOperator{\colBasis}{ColumnBasis}
+\DeclareMathOperator{\rankProfile}{rankProfile}
+\def\mab{\qopname\relax n{OrderBasis}}
+\def\mnbrs{\qopname\relax n{MinimalNullspacerBasisRankSensitive}}
+\def\mmab{\qopname\relax n{FastBasis}}
+\def\umab{\qopname\relax n{UnbalancedFastOrderBasis}}
+\def\mnb{\qopname\relax n{MinimalKernelBasis ~ }}
+\newcommand{\bb}{\\}
+
+\makeatother
+
+\usepackage{babel}
+  \providecommand{\definitionname}{Definition}
+  \providecommand{\examplename}{Example}
+  \providecommand{\lemmaname}{Lemma}
+  \providecommand{\remarkname}{Remark}
+\providecommand{\theoremname}{Theorem}
+
+\begin{document}
+
+\title{Computing Determinant of Polynomial Matrices}
+
+
+\author{Wei Zhou and George Labahn}
+
+
+\thanks{Cheriton School of Computer Science, University of Waterloo, Waterloo
+ON, Canada N2L 3G1 \textbf{\{w2zhou,glabahn\}@uwaterloo.ca}}
+\begin{abstract}
+Given a square, nonsingular matrix of univariate polynomials $\mathbf{F}\in\mathbb{K}[x]^{n\times n}$
+over a field $\mathbb{K}$, we give a fast, deterministic algorithm
+for finding the determinant of $\mathbf{F}$ with complexity $O^{\sim}\left(n^{\omega}s\right)$
+where $s$ is the average column degree or the average row degree
+of $\mathbf{F}$. Here soft-$O$ notation is Big-$O$ with log factors
+removed and $\omega$ is the exponent of matrix multiplication. 
+\end{abstract}
+\maketitle
+\input{introduction.tex}
+
+\input{Preliminaries.tex}
+
+\input{diagonals.tex}
+
+\input{determinant.tex}
+
+\input{complexity.tex}
+
+\input{conclusion.tex}
+
+\bibliographystyle{plain}
+
+%\bibliographystyle{plainnat}
+\bibliographystyle{plain}
+\bibliography{paper}
+
+\end{document}

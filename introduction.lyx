@@ -1,0 +1,280 @@
+#LyX file created by tex2lyx 1.6.8
+\lyxformat 264
+\begin_document
+\begin_header
+\textclass amsart
+\language english
+\inputencoding latin9
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\paperfontsize default
+\spacing single
+\papersize default
+\use_geometry false
+\use_amsmath 2
+\use_esint 1
+\cite_engine natbib_authoryear
+\use_bibtopic false
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+
+Introduction
+\end_layout
+
+\begin_layout Standard
+
+For a given square, nonsingular matrix polynomial 
+\begin_inset Formula $\mathbf{F} \in \mathbb{K}[x]^{n \times n}$
+\end_inset
+
+ there exists a unimodular matrix 
+\begin_inset Formula $\mathbf{U}$
+\end_inset
+
+ such that 
+\begin_inset Formula $\mathbf{F} \cdot \mathbf{U} = \mathbf{H}$
+\end_inset
+
+, a matrix in (column) Hermite normal form. Thus 
+\begin_inset Formula \[
+\mathbf{H} = \left[ \begin{array}{cccc} h_{11} & & \\ h_{21} & h_{22} & & \\
+\vdots & \vdots  & \ddots & \\
+h_{n1} & \cdots & \cdots & h_{nn} \end{array} \right]
+\]
+\end_inset
+
+ a lower triangular matrix where 
+\begin_inset Formula $h_{ii}$
+\end_inset
+
+ is monic and deg 
+\begin_inset Formula $h_{ij} < \mbox{ deg } h_{ii}$
+\end_inset
+
+ for all 
+\begin_inset Formula $j<i$
+\end_inset
+
+. Other variations include specifying row rather than column forms (in which case the unimodular matrix multiplies on the left rather than the right) or upper rather than lower triangular form. The Hermite form was first defined by Hermite in 1851 in the context of triangularizing integer matrices.
+\end_layout
+
+\begin_layout Standard
+
+There has been considerable work on fast algorithms for Hermite form computation. This includes 
+\begin_inset Formula $O^{\sim}\left(n^{4}d\right)$
+\end_inset
+
+ algorithms from Hafner and McCurley 
+\begin_inset LatexCommand cite
+after ""
+before ""
+key "hafner"
+
+\end_inset
+
+ and Iliopoulos 
+\begin_inset LatexCommand cite
+after ""
+before ""
+key "iliopoulos"
+
+\end_inset
+
+ which control intermediate size by working modulo the determinant. Hafner and McCurley 
+\begin_inset LatexCommand cite
+after ""
+before ""
+key "hafner"
+
+\end_inset
+
+, Storjohann and Labahn 
+\begin_inset LatexCommand cite
+after ""
+before ""
+key "storjohann-labahn96"
+
+\end_inset
+
+ and Villard 
+\begin_inset LatexCommand cite
+after ""
+before ""
+key "villard96"
+
+\end_inset
+
+ gave new algorithms which reduced the cost to 
+\begin_inset Formula $O^{\sim}\left(n^{\omega + 1}d\right)$
+\end_inset
+
+ operations, with 
+\begin_inset Formula $2 < \omega < 3$
+\end_inset
+
+ being the exponent of matrix multiplication. The second named worked with integer matrices but the results carried over directly to polynomial matrices. Mulders and Storjohann 
+\begin_inset LatexCommand cite
+after ""
+before ""
+key "mulders-storjohann:2003"
+
+\end_inset
+
+ gave an iterative algorithm having complexity 
+\begin_inset Formula $O\left(n^{3}d^2\right)$
+\end_inset
+
+, thus reducing the exponent of 
+\begin_inset Formula $n$
+\end_inset
+
+ at the cost of increasing the exponent of the degree 
+\begin_inset Formula $d$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+During the past decade the goal has been to give an algorithm that computes the Hermite form in the time it takes to multiply two polynomial matrices having the same size 
+\begin_inset Formula $n$
+\end_inset
+
+ and degree 
+\begin_inset Formula $d$
+\end_inset
+
+ as the input matrix, namely at a cost 
+\begin_inset Formula $O^{\sim}\left(n^{\omega}d\right)$
+\end_inset
+
+. Such algorithms already exist for a number of other polynomial matrix problems. This included probabalistic algorithms for example linear solving 
+\begin_inset LatexCommand cite
+after ""
+before ""
+key "mulders-storjohann:2003"
+
+\end_inset
+
+, row reduction 
+\begin_inset LatexCommand cite
+after ""
+before ""
+key "Giorgi2003"
+
+\end_inset
+
+ and polynomial matrix inversion 
+\begin_inset LatexCommand cite
+after ""
+before ""
+key "jeannerod-villard:05"
+
+\end_inset
+
+ and later deterministic algorithms for linear solving and row reduction 
+\begin_inset LatexCommand cite
+after ""
+before ""
+key "GSSV2012"
+
+\end_inset
+
+. In the case of Hermite normal form computation Gupta and Storjohann 
+\begin_inset LatexCommand cite
+after ""
+before ""
+key "GS2011"
+
+\end_inset
+
+ gave an algorithm which reduced the complexity to 
+\begin_inset Formula $O^{\sim}\left(n^{3}d\right)$
+\end_inset
+
+. Their algorithm is randomized of Las Vegas type rather than deterministic.
+\end_layout
+
+\begin_layout Standard
+
+In this paper we give a deterministic Hermite norml form algorithm having complexity 
+\begin_inset Formula $O^{\sim}\left(n^{3}d\right)$
+\end_inset
+
+. As in Gupta and Storjohann our approach is given in two steps : first find the diagonal elements of the Hermite form and then find the remaining entries. While Gupta and Storjohann use the Smith normal form to determine the diagonal entries our approach is to make use of fast, deterministic methods forshifted minimal kernel basis and column basis computation. The use of shifted minimal kernel bases for matrix normal form computation was previously used in 
+\begin_inset LatexCommand cite
+after ""
+before ""
+key "BLV:1999,BLV:jsc06"
+
+\end_inset
+
+ in order to obtain efficient algorithms in the case where intermediate coefficient growth is a concern.
+\end_layout
+
+\begin_layout Standard
+
+Our algorithm finds the diagonal entries of the Hermite form has a cost of 
+\begin_inset Formula $O^{\sim}\left(n^{\omega -1}s\right)$
+\end_inset
+
+ field operations where 
+\begin_inset Formula $s$
+\end_inset
+
+ is the average of the column degrees of 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+. By slightly modifying the diagonal algorithm we are also able to give as a corollary a 
+\begin_inset Formula $O^{\sim}\left(n^{\omega -1}s\right)$
+\end_inset
+
+ deterministic algorithm for finding the determinant of 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+. This compares to the 
+\begin_inset Formula $O^{\sim}\left(n^{\omega}d\right)$
+\end_inset
+
+ cost for the Las Vegas determinant algorithm of Storjohann given in 
+\begin_inset LatexCommand cite
+after ""
+before ""
+key "storjohann:2002,storjohann:2003"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+The remainder of this paper is organized as follows. In the next section we give preliminary information for shifted degrees, kernel and column bases of polynomial matrices. Section 3 then contains the algorithm for finding the diagonal elements of a Hermite form with the following section giving the details of the fast algorithm for the entire Hermite normal form computation. Section 5 describes the small modification needed for determinant computation. The paper ends with a conclusion and topics for future research. 
+\end_layout
+
+\end_body
+\end_document

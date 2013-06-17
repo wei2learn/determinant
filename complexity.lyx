@@ -1,0 +1,318 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass amsart
+\use_default_options false
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding latin9
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 2
+\use_esint 1
+\use_mhchem 0
+\use_mathdots 1
+\cite_engine natbib_authoryear
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Subsection
+Computational cost
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:diagonalCost"
+
+\end_inset
+
+ Algorithm 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "alg:determinant"
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%and 
+\backslash
+prettyref{alg:hermiteDiagonalWithScalingFactor}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+costs 
+\begin_inset Formula $O^{\sim}\left(n^{\omega}s\right)$
+\end_inset
+
+ field operations to compute the determinant of a nonsingular matrix 
+\begin_inset Formula $\mathbf{F}\in\mathbb{K}\left[x\right]^{n\times n}$
+\end_inset
+
+, where 
+\begin_inset Formula $s$
+\end_inset
+
+ is the average column degree of 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Proof
+From 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:firstDiagonalBlock"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:secondDiagonalBlock"
+
+\end_inset
+
+ the computation of the two diagonal blocks 
+\begin_inset Formula $\mathbf{G}_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{G}_{2}$
+\end_inset
+
+ costs 
+\begin_inset Formula $O^{\sim}\left(n^{\omega}s\right)$
+\end_inset
+
+ field operations, which dominates the cost of the other operations in the
+ algorithm.
+ 
+\end_layout
+
+\begin_layout Proof
+Now for this recursive algorithm, if we let its cost on a subproblem be
+ 
+\begin_inset Formula $g(m)$
+\end_inset
+
+ for the input matrix of dimension 
+\begin_inset Formula $m$
+\end_inset
+
+, by 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:firstDiagonalBlock"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:secondDiagonalBlock"
+
+\end_inset
+
+ the sum of the column degrees of the input matrix is still bounded by 
+\begin_inset Formula $ns$
+\end_inset
+
+, but the average column is now 
+\begin_inset Formula $ns/m$
+\end_inset
+
+.
+ Then the cost 
+\begin_inset Formula 
+\begin{eqnarray*}
+g(m) & \in & O^{\sim}(m^{\omega}\left(ns/m\right))+g(\left\lceil m/2\right\rceil )+g(\left\lfloor m/2\right\rfloor )\\
+ & \in & O^{\sim}(m^{\omega-1}ns)+2g(\left\lceil m/2\right\rceil )\\
+ & \in & O^{\sim}(m^{\omega-1}ns).
+\end{eqnarray*}
+
+\end_inset
+
+ The cost on the original problem when the dimension 
+\begin_inset Formula $m=n$
+\end_inset
+
+ is therefore 
+\begin_inset Formula $O^{\sim}\left(n^{\omega}s\right)$
+\end_inset
+
+.
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%Note that always rounding up $n/2$ to $
+\backslash
+left
+\backslash
+lceil n/2
+\backslash
+right
+\backslash
+rceil $ is no worse than assuming 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%$n$ is a power of $2$.
+ In other words, the entries in the sequence $
+\backslash
+left[
+\backslash
+left
+\backslash
+lceil %n/2
+\backslash
+right
+\backslash
+rceil ,
+\backslash
+left
+\backslash
+lceil n/4
+\backslash
+right
+\backslash
+rceil ,
+\backslash
+dots,1
+\backslash
+right]$
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%are not larger than the corresponding entries in the sequence $
+\backslash
+left[m/2,m/4,
+\backslash
+dots,1
+\backslash
+right]$,
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%where $m =2^{
+\backslash
+left
+\backslash
+lceil 
+\backslash
+log_{2}n
+\backslash
+right
+\backslash
+rceil }$ is the smallest power of $2$ that is not less %than $n$.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

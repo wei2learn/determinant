@@ -1,0 +1,931 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass amsart
+\use_default_options false
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding latin9
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 2
+\use_esint 1
+\use_mhchem 0
+\use_mathdots 1
+\cite_engine natbib_authoryear
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:diagonals"
+
+\end_inset
+
+Recursive Computation
+\end_layout
+
+\begin_layout Standard
+In this section we show how to recursively compute the determinant of a
+ nonsingular input matrix 
+\begin_inset Formula $\mathbf{F}\in\mathbb{K}\left[x\right]^{n\times n}$
+\end_inset
+
+ with column degrees 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+.
+ The computation makes use of fast kernel and column basis computation.
+\end_layout
+
+\begin_layout Standard
+Consider unimodularly transforming 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+ to 
+\begin_inset Formula 
+\begin{equation}
+\mathbf{F}\mathbf{U}=\mathbf{G}=\begin{bmatrix}\mathbf{G}_{1} & 0\\
+* & \mathbf{G}_{2}
+\end{bmatrix},\label{eq:step1HermiteDiagonal}
+\end{equation}
+
+\end_inset
+
+which eliminates a top right block and gives two square diagonal blocks
+ 
+\begin_inset Formula $\mathbf{G}_{1}$
+\end_inset
+
+ and
+\series bold
+ 
+\begin_inset Formula $\mathbf{G}_{2}$
+\end_inset
+
+
+\series default
+ in 
+\begin_inset Formula $\mathbf{G}$
+\end_inset
+
+.
+ Then the determinant of 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+ can be computed as 
+\begin_inset Formula 
+\begin{equation}
+\det\mathbf{F}=\frac{\det\mathbf{G}}{\det\mathbf{U}}=\frac{\det\mathbf{G}_{1}\cdot\det\mathbf{G}_{2}}{\det\mathbf{U}},\label{eq:determinantFromDiagonalBlocks}
+\end{equation}
+
+\end_inset
+
+ which requires us to first compute 
+\begin_inset Formula $\det\mathbf{G}_{1}$
+\end_inset
+
+, 
+\begin_inset Formula $\det\mathbf{G}_{2}$
+\end_inset
+
+, and 
+\begin_inset Formula $\det\mathbf{U}$
+\end_inset
+
+.
+ The same procedure can then be applied recursively to compute the determinant
+ of 
+\begin_inset Formula $\mathbf{G}_{1}$
+\end_inset
+
+ and the determinant of 
+\begin_inset Formula $\mathbf{G}_{2}$
+\end_inset
+
+.
+ This can be repeated recursively until the dimension becomes 1.
+ 
+\end_layout
+
+\begin_layout Standard
+One major obstacle of this approach, however, is that the degrees of the
+ unimodular matrix 
+\begin_inset Formula $\mathbf{U}$
+\end_inset
+
+ and the matrix 
+\begin_inset Formula $\mathbf{G}$
+\end_inset
+
+ can be too large for efficient computation.
+ 
+\begin_inset Note Comment
+status collapsed
+
+\begin_layout Plain Layout
+To construct such an example, just use a random 
+\begin_inset Formula $k\times\left(k+1\right)$
+\end_inset
+
+ matrix 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+, and set 
+\begin_inset Formula $\mathbf{F}=\begin{bmatrix}\mathbf{A} & 0\\
+* & *
+\end{bmatrix}$
+\end_inset
+
+, and compute 
+\begin_inset Formula $\mathbf{G}_{1}$
+\end_inset
+
+ as a column basis of 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+.
+ Then the degrees of 
+\begin_inset Formula $\mathbf{U}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{G}$
+\end_inset
+
+ are often 
+\begin_inset Formula $\Theta(nd)$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+ To sidestep this, we will show that the matrices 
+\begin_inset Formula $\mathbf{G}_{1}$
+\end_inset
+
+,
+\series bold
+ 
+\begin_inset Formula $\mathbf{G}_{2}$
+\end_inset
+
+
+\series default
+, and 
+\begin_inset Formula $\det\mathbf{U}$
+\end_inset
+
+ can be in fact computed without computing the matrices 
+\begin_inset Formula $\mathbf{G}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{U}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Subsection
+Computing the diagonal blocks
+\end_layout
+
+\begin_layout Standard
+Suppose we want 
+\begin_inset Formula $\mathbf{G}_{1}$
+\end_inset
+
+ to have dimension 
+\begin_inset Formula $k$
+\end_inset
+
+.
+ We can partition
+\series bold
+ 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+ 
+\series default
+as 
+\begin_inset Formula $\mathbf{F}=\begin{bmatrix}\mathbf{F}_{U}\\
+\mathbf{F}_{D}
+\end{bmatrix}$
+\end_inset
+
+ with 
+\begin_inset Formula $k$
+\end_inset
+
+ rows in 
+\begin_inset Formula $\mathbf{F}_{U}$
+\end_inset
+
+, then both 
+\begin_inset Formula $\mathbf{F}_{U}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{F}_{D}$
+\end_inset
+
+ are of full-rank since 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+ is assumed to be nonsingular.
+ By partitioning 
+\begin_inset Formula $\mathbf{U}=\begin{bmatrix}\mathbf{U}_{L}~~, & \mathbf{U}_{R}\end{bmatrix}$
+\end_inset
+
+, with 
+\begin_inset Formula $k$
+\end_inset
+
+ columns in 
+\begin_inset Formula $\mathbf{U}_{L}$
+\end_inset
+
+, then 
+\begin_inset Formula 
+\begin{equation}
+\mathbf{F}\mathbf{U}=\begin{bmatrix}\mathbf{F}_{U}\\
+\mathbf{F}_{D}
+\end{bmatrix}\begin{bmatrix}\mathbf{U}_{L} & \mathbf{U}_{R}\end{bmatrix}=\begin{bmatrix}\mathbf{G}_{1} & 0\\
+* & \mathbf{G}_{2}
+\end{bmatrix}=\mathbf{G}.\label{eq:UPartitioned}
+\end{equation}
+
+\end_inset
+
+ Notice that the matrix 
+\begin_inset Formula $\mathbf{G}_{1}$
+\end_inset
+
+ is nonsingular and is therefore a column basis of 
+\begin_inset Formula $\mathbf{F}_{U}$
+\end_inset
+
+.
+ As such this can be efficiently computed 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%using 
+\backslash
+cite{za2013} 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+as mentioned in Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:fastcolbasis"
+
+\end_inset
+
+.
+ In addition, the column basis algorithm makes the resulting column degrees
+ of 
+\begin_inset Formula $\mathbf{G}_{1}$
+\end_inset
+
+ small enough for 
+\begin_inset Formula $\mathbf{G}_{1}$
+\end_inset
+
+ to be efficiently used again as the input matrix of a new subproblem in
+ the recursive procedure.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:firstDiagonalBlock"
+
+\end_inset
+
+The first diagonal block 
+\begin_inset Formula $\mathbf{G}_{1}$
+\end_inset
+
+ in 
+\begin_inset Formula $\mathbf{G}$
+\end_inset
+
+ can be computed with a cost of 
+\begin_inset Formula $O^{\sim}\left(n^{\omega}s\right)$
+\end_inset
+
+ and with column degrees bounded by the 
+\begin_inset Formula $k$
+\end_inset
+
+ largest column degrees of 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+For computing the second diagonal block 
+\begin_inset Formula $\mathbf{G}_{2}$
+\end_inset
+
+, notice that we do not need a complete unimodular matrix 
+\begin_inset Formula $\mathbf{U}$
+\end_inset
+
+, only 
+\begin_inset Formula $\mathbf{U}_{R}$
+\end_inset
+
+ is needed to compute 
+\begin_inset Formula $\mathbf{G}_{2}=\mathbf{F}_{D}\mathbf{U}_{R}$
+\end_inset
+
+.
+ In fact, 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:unimodular_kernel_columnBasis"
+
+\end_inset
+
+ tells us much more.
+ It tells us that the matrix 
+\begin_inset Formula $\mathbf{U}_{R}$
+\end_inset
+
+ is a right kernel basis of 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+, which makes the top right block of 
+\begin_inset Formula $\mathbf{G}$
+\end_inset
+
+ zero, and the kernel basis 
+\begin_inset Formula $\mathbf{U}_{R}$
+\end_inset
+
+ can be replaced by any other kernel basis of 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+ to give another unimodular matrix that also transforms 
+\begin_inset Formula $\mathbf{F}_{U}$
+\end_inset
+
+ to a column basis and also eliminates the top right block of 
+\begin_inset Formula $\mathbf{G}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:oneStepHermiteDiagonal"
+
+\end_inset
+
+ Partition 
+\begin_inset Formula $\mathbf{F}=\begin{bmatrix}\mathbf{F}_{U}\\
+\mathbf{F}_{D}
+\end{bmatrix}$
+\end_inset
+
+ and suppose 
+\begin_inset Formula $\mathbf{G}_{1}$
+\end_inset
+
+ is a column basis of 
+\begin_inset Formula $\mathbf{F}_{U}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{N}$
+\end_inset
+
+ a kernel basis of 
+\begin_inset Formula $\mathbf{F}_{U}$
+\end_inset
+
+.
+ Then there is a unimodular matrix 
+\begin_inset Formula $\mathbf{U}=\left[~*~,~\mathbf{N}\right]$
+\end_inset
+
+ such that 
+\begin_inset Formula 
+\[
+\mathbf{F}\mathbf{U}=\begin{bmatrix}\mathbf{G}_{1} & 0\\
+* & \mathbf{G}_{2}
+\end{bmatrix},
+\]
+
+\end_inset
+
+ where 
+\begin_inset Formula $\mathbf{G}_{2}=\mathbf{F}_{D}\mathbf{N}$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+ is square nonsingular, then 
+\begin_inset Formula $\mathbf{G}_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{G}_{2}$
+\end_inset
+
+ are also square nonsingular.
+ 
+\end_layout
+
+\begin_layout Standard
+Note that the block represented by the symbol 
+\begin_inset Formula $*$
+\end_inset
+
+ is not needed in our computation.
+ This block may have very large degrees and cannot be computed efficiently.
+ Now we can also determine 
+\begin_inset Formula $\mathbf{G}_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{G}_{2}$
+\end_inset
+
+ without computing the unimodular matrix 
+\begin_inset Formula $\mathbf{U}$
+\end_inset
+
+.
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%$
+\backslash
+mathbf{G}_{1}$ can be computed using the method from 
+\backslash
+cite{za2013},
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%while the kernel basis computation from 
+\backslash
+cite{za2012}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%can be used to compute a kernel basis $
+\backslash
+mathbf{N}$ of $
+\backslash
+mathbf{F}_{U}$,
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%which can then in turn be used to compute $
+\backslash
+mathbf{G}_{2}=
+\backslash
+mathbf{F}_{D}
+\backslash
+mathbf{N}$.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%The particular kernel basis $
+\backslash
+mathbf{N}$ found from 
+\backslash
+cite{za2012} has the degree bounds 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%needed in Theorem 
+\backslash
+ref{thm:multiplyUnbalancedMatrices} and hence this multiplication can also
+ be done efficiently.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%After $
+\backslash
+mathbf{G}_{1}$ and $
+\backslash
+mathbf{G}_{2}$ are computed, we can
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%repeat the same process on each of these two matrices, which now have
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%lower dimensions, until the dimension becomes one.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+For this recursive procedure to be efficient, we must be able to compute
+ 
+\begin_inset Formula $\mathbf{G}_{2}$
+\end_inset
+
+ efficiently, which can be done by using the existing algorithms for kernel
+ basis computation and the multiplication of matrices with unbalanced degrees.
+ We also require that the column degrees of 
+\begin_inset Formula $\mathbf{G}_{2}$
+\end_inset
+
+ to be small enough for 
+\begin_inset Formula $\mathbf{G}_{2}$
+\end_inset
+
+ to be efficiently used again as the input matrix of a new subproblem in
+ the recursive procedure.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:secondDiagonalBlock"
+
+\end_inset
+
+We can compute the second diagonal block 
+\begin_inset Formula $\mathbf{G}_{2}$
+\end_inset
+
+ with a cost of 
+\begin_inset Formula $O^{\sim}\left(n^{\omega}s\right)$
+\end_inset
+
+ field operations and have 
+\begin_inset Formula $\sum\cdeg\mathbf{G}_{2}\le\sum\vec{s}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+We know 
+\begin_inset Formula $\mathbf{G}_{2}=\mathbf{F}_{D}\mathbf{N}$
+\end_inset
+
+ from 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:oneStepHermiteDiagonal"
+
+\end_inset
+
+ for a kernel basis 
+\begin_inset Formula $\mathbf{N}$
+\end_inset
+
+ of 
+\begin_inset Formula $\mathbf{F}_{U}$
+\end_inset
+
+.
+ In fact, this kernel basis can be made 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+-minimal using the algorithm from 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "za2012"
+
+\end_inset
+
+, and computing such a 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+-minimal kernel basis of 
+\begin_inset Formula $\mathbf{F}_{U}$
+\end_inset
+
+ costs 
+\begin_inset Formula $O^{\sim}\left(n^{\omega}s\right)$
+\end_inset
+
+ field operations by 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "thm:costGeneral"
+
+\end_inset
+
+.
+ In addition, the sum of the 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+-column degrees of such a 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+-minimal 
+\begin_inset Formula $\mathbf{N}$
+\end_inset
+
+ is bounded by 
+\begin_inset Formula $\sum\vec{s}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+For the matrix multiplication 
+\begin_inset Formula $\mathbf{F}_{D}\mathbf{N}$
+\end_inset
+
+, the sum of the column degrees of 
+\begin_inset Formula $\mathbf{F}_{D}$
+\end_inset
+
+ and the sum of the 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+-column degrees of 
+\begin_inset Formula $\mathbf{N}$
+\end_inset
+
+ are both bounded by 
+\begin_inset Formula $\sum\vec{s}$
+\end_inset
+
+.
+ Therefore Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:multiplyUnbalancedMatrices"
+
+\end_inset
+
+ (see also 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Theorem 3.7"
+key "za2012"
+
+\end_inset
+
+) applies and the multiplication can be done with a cost of 
+\begin_inset Formula $O^{\sim}\left(n^{\omega}s\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+With 
+\begin_inset Formula $\mathbf{N}$
+\end_inset
+
+ computed, we can then apply 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "thm:multiplyUnbalancedMatrices"
+
+\end_inset
+
+ directly to multiply 
+\begin_inset Formula $\mathbf{F}_{D}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{N}$
+\end_inset
+
+ with a cost of 
+\begin_inset Formula $O^{\sim}\left(n^{\omega}s\right)$
+\end_inset
+
+ field operations.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%Let us look at the computational cost of Algorithm 
+\backslash
+prettyref{alg:hermiteDiagonal}.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%and 
+\backslash
+prettyref{alg:hermiteDiagonalWithScalingFactor}.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

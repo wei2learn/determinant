@@ -1,0 +1,895 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass amsart
+\use_default_options false
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding latin9
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 2
+\use_esint 1
+\use_mhchem 0
+\use_mathdots 1
+\cite_engine natbib_authoryear
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Subsection
+Determinant of the unimodular matrix
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:firstDiagonalBlock"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:secondDiagonalBlock"
+
+\end_inset
+
+ show that the two diagonal blocks in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "eq:step1HermiteDiagonal"
+
+\end_inset
+
+ can be computed efficiently.
+ To compute the determinant of 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+ based on 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "eq:determinantFromDiagonalBlocks"
+
+\end_inset
+
+, we still need to know the determinant of the unimodular matrix 
+\begin_inset Formula $\mathbf{U}$
+\end_inset
+
+ that satisfies 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "eq:UPartitioned"
+
+\end_inset
+
+, or equivalently, we can also find out the determinant of 
+\begin_inset Formula $\mathbf{V}=\mathbf{U}^{-1}$
+\end_inset
+
+.
+ Note the computation of the diagonal blocks in 
+\begin_inset Formula $\mathbf{G}$
+\end_inset
+
+ also gives 
+\begin_inset Formula $\mathbf{U}_{R}$
+\end_inset
+
+, the right 
+\begin_inset Formula $n-k$
+\end_inset
+
+ columns of 
+\begin_inset Formula $\mathbf{U}$
+\end_inset
+
+, which is also a right kernel basis of 
+\begin_inset Formula $\mathbf{F}_{U}$
+\end_inset
+
+.
+ In fact, it also gives us the matrix 
+\begin_inset Formula $\mathbf{V}_{U}$
+\end_inset
+
+ consisting of the top 
+\begin_inset Formula $k$
+\end_inset
+
+ rows of 
+\begin_inset Formula $\mathbf{V}$
+\end_inset
+
+, from computing 
+\begin_inset Formula $\mathbf{G}_{1}$
+\end_inset
+
+, a column basis of 
+\begin_inset Formula $\mathbf{F}_{U}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Lemma
+Let 
+\begin_inset Formula $k$
+\end_inset
+
+ be the dimension of 
+\begin_inset Formula $\mathbf{G}_{1}$
+\end_inset
+
+.
+ The matrix 
+\begin_inset Formula $\mathbf{V}_{U}\in\mathbb{K}\left[x\right]^{k\times n}$
+\end_inset
+
+ satisfies 
+\begin_inset Formula $\mathbf{G}_{1}\mathbf{V}_{U}=\mathbf{F}_{U}$
+\end_inset
+
+ if and only if 
+\begin_inset Formula $\mathbf{V}_{U}$
+\end_inset
+
+ is the submatrix of 
+\begin_inset Formula $\mathbf{V}=\mathbf{U}^{-1}$
+\end_inset
+
+ consisting of the top 
+\begin_inset Formula $k$
+\end_inset
+
+ rows of 
+\begin_inset Formula $\mathbf{V}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Proof
+This can be seen from 
+\begin_inset Formula 
+\[
+\mathbf{G}\mathbf{V}=\begin{bmatrix}\mathbf{G}_{1} & 0\\
+* & \mathbf{G}_{2}
+\end{bmatrix}\begin{bmatrix}\mathbf{V}_{U}\\
+\mathbf{V}_{D}
+\end{bmatrix}=\begin{bmatrix}\mathbf{F}_{U}\\
+\mathbf{F}_{D}
+\end{bmatrix}=\mathbf{F}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+While the determinant of 
+\begin_inset Formula $\mathbf{V}$
+\end_inset
+
+ or the determinant of 
+\begin_inset Formula $\mathbf{U}$
+\end_inset
+
+ is needed to compute the determinant of 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+, a major problem is that we do not know 
+\begin_inset Formula $\mathbf{U}_{L}$
+\end_inset
+
+ or 
+\begin_inset Formula $\mathbf{V}_{D}$
+\end_inset
+
+, which may not be efficiently computed due to their large degrees.
+ This means we need to compute the determinant of 
+\begin_inset Formula $\mathbf{V}$
+\end_inset
+
+ or 
+\begin_inset Formula $\mathbf{U}$
+\end_inset
+
+ without knowing the complete matrix 
+\begin_inset Formula $\mathbf{V}$
+\end_inset
+
+ or 
+\begin_inset Formula $\mathbf{U}$
+\end_inset
+
+.
+ The following lemma shows how this can be done using just 
+\begin_inset Formula $\mathbf{U}_{R}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{V}_{U}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:scalingToDeterminant"
+
+\end_inset
+
+ Let 
+\begin_inset Formula $\mathbf{U}=\left[\mathbf{U}_{L},\mathbf{U}_{R}\right]$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+ be as before, that is, they satisfy 
+\begin_inset Formula 
+\[
+\mathbf{F}\mathbf{U}=\begin{bmatrix}\mathbf{F}_{U}\\
+\mathbf{F}_{D}
+\end{bmatrix}\begin{bmatrix}\mathbf{U}_{L} & \mathbf{U}_{R}\end{bmatrix}=\begin{bmatrix}\mathbf{G}_{1} & 0\\
+* & \mathbf{G}_{2}
+\end{bmatrix}=\mathbf{G},
+\]
+
+\end_inset
+
+ where the row dimension of 
+\begin_inset Formula $\mathbf{F}_{U}$
+\end_inset
+
+, the column dimension of 
+\begin_inset Formula $\mathbf{U}_{L}$
+\end_inset
+
+, and the dimension of 
+\begin_inset Formula $\mathbf{G}_{1}$
+\end_inset
+
+ are 
+\begin_inset Formula $k$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $\mathbf{V}=\begin{bmatrix}\mathbf{V}_{U}\\
+\mathbf{V}_{D}
+\end{bmatrix}$
+\end_inset
+
+ be the inverse of 
+\begin_inset Formula $\mathbf{U}$
+\end_inset
+
+ with 
+\begin_inset Formula $k$
+\end_inset
+
+ rows in 
+\begin_inset Formula $\mathbf{V}_{U}$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $\mathbf{U}_{L}^{*}\in\mathbb{K}\left[x\right]^{n\times k}$
+\end_inset
+
+ is a matrix such that 
+\begin_inset Formula $\mathbf{U}^{*}=\left[\mathbf{U}_{L}^{*},\mathbf{U}_{R}\right]$
+\end_inset
+
+ is unimodular, then 
+\begin_inset Formula 
+\[
+\det\mathbf{F}~=~\frac{\det\mathbf{G}\cdot\det\left(\mathbf{V}_{U}\mathbf{U}_{L}^{*}\right)}{\det\left(\mathbf{U}^{*}\right)}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Since 
+\begin_inset Formula $\det\mathbf{F}~=~\det\mathbf{G}\cdot\det\mathbf{V}$
+\end_inset
+
+, we just need to show that 
+\begin_inset Formula $\det\mathbf{V}=\det\left(\mathbf{V}_{U}\mathbf{U}_{L}^{*}\right)/\det\left(\mathbf{U}^{*}\right)$
+\end_inset
+
+, which follows from 
+\begin_inset Formula 
+\begin{eqnarray*}
+\det\mathbf{V}\cdot\det\mathbf{U}^{*} & = & \det\left(\mathbf{V}\cdot\mathbf{U}^{*}\right)\\
+ & = & \det\left(\begin{bmatrix}\mathbf{V}_{U}\\
+\mathbf{V}_{D}
+\end{bmatrix}\begin{bmatrix}\mathbf{U}_{L}^{*} & \mathbf{U}_{R}\end{bmatrix}\right)\\
+ & = & \det\left(\begin{bmatrix}\mathbf{V}_{U}\mathbf{U}_{L}^{*} & 0\\
+* & I
+\end{bmatrix}\right)\\
+ & = & \det\left(\mathbf{V}_{U}\mathbf{U}_{L}^{*}\right).
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:scalingToDeterminant"
+
+\end_inset
+
+ shows that the determinant of 
+\begin_inset Formula $\mathbf{V}$
+\end_inset
+
+ can be computed using 
+\begin_inset Formula $\mathbf{V}_{U}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{U}_{R}$
+\end_inset
+
+, which we already know from the computation of the diagonal blocks in 
+\begin_inset Formula $\mathbf{G}$
+\end_inset
+
+, and a unimodular completion of 
+\begin_inset Formula $\mathbf{U}_{R}$
+\end_inset
+
+.
+ In fact, this can be made more efficient still by noticing that the higher
+ degree parts do not affect the computation.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:determinantOfUnimodular"
+
+\end_inset
+
+If 
+\begin_inset Formula $\mathbf{U}\in\mathbb{K}\left[x\right]^{n\times n}$
+\end_inset
+
+ is unimodular, then 
+\begin_inset Formula $\det\mathbf{U}=\det\left(\mathbf{U}\mod x\right)=\det\left(\mathbf{U}\left(0\right)\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Note that 
+\begin_inset Formula $\det\left(\mathbf{U}\left(\alpha\right)\right)=\left(\det\mathbf{U}\right)\left(\alpha\right)$
+\end_inset
+
+ for any 
+\begin_inset Formula $\alpha\in\mathbb{K}$
+\end_inset
+
+, that is, the result is the same whether we do evaluation before or after
+ computing the determinant.
+ Taking 
+\begin_inset Formula $\alpha=0$
+\end_inset
+
+, then we have 
+\begin_inset Formula 
+\[
+\det\left(\mathbf{U}\mod x\right)=\det\left(\mathbf{U}\left(0\right)\right)=\left(\det\mathbf{U}\right)\left(0\right)=\det\left(\mathbf{U}\right)\mod x=\det\mathbf{U}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This allows us to use just the degree zero coefficient matrices in the computati
+on.
+ So 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:scalingToDeterminant"
+
+\end_inset
+
+ can be improved as follows.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:scalingToDeterminantSimplified"
+
+\end_inset
+
+ Let 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+, 
+\begin_inset Formula $\mathbf{U}=\left[\mathbf{U}_{L},\mathbf{U}_{R}\right]$
+\end_inset
+
+, and 
+\begin_inset Formula $\mathbf{V}=\begin{bmatrix}\mathbf{V}_{U}\\
+\mathbf{V}_{D}
+\end{bmatrix}$
+\end_inset
+
+ be as before.
+ Let 
+\begin_inset Formula $U_{R}=\mathbf{U}_{R}\mod x$
+\end_inset
+
+, 
+\begin_inset Formula $V_{U}=\mathbf{V}_{U}\mod x$
+\end_inset
+
+ be the constant matrices of 
+\begin_inset Formula $\mathbf{U}_{R}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{V}_{U}$
+\end_inset
+
+, respectively.
+ If 
+\begin_inset Formula $U_{L}^{*}\in\mathbb{K}^{n\times*}$
+\end_inset
+
+ is a matrix such that 
+\begin_inset Formula $U^{*}=\left[U_{L}^{*},U_{R}\right]$
+\end_inset
+
+ is unimodular, then 
+\begin_inset Formula 
+\[
+\det\mathbf{F}~=~\frac{\det\mathbf{G}\cdot\det\left(V_{U}U_{L}^{*}\right)}{\det\left(U^{*}\right)}.
+\]
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Proof
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:determinantOfUnimodular"
+
+\end_inset
+
+ implies that 
+\begin_inset Formula $\det\mathbf{V}=\det V$
+\end_inset
+
+ and 
+\begin_inset Formula $\det\mathbf{U}^{*}=\det U^{*}$
+\end_inset
+
+, which can be then substituted in the proof of 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:scalingToDeterminant"
+
+\end_inset
+
+ to obtain the result.
+\end_layout
+
+\begin_layout Remark
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:scalingToDeterminantSimplified"
+
+\end_inset
+
+ requires us to compute 
+\begin_inset Formula $U_{L}^{*}\in\mathbb{K}^{n\times*}$
+\end_inset
+
+ a matrix such that 
+\begin_inset Formula $U^{*}=\left[U_{L}^{*},U_{R}\right]$
+\end_inset
+
+ is unimodular.
+ This can be obtained easily from the unimodular matrix that transforms
+ 
+\begin_inset Formula $V_{U}$
+\end_inset
+
+ to its reduced column echelon form computed using the Gauss Jordan transform
+ algorithm from 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "storjohann:phd2000"
+
+\end_inset
+
+ with a cost of 
+\begin_inset Formula $O\left(nm^{\omega-1}\right)$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+We now have all the ingredients needed for computing the determinant of
+ 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+.
+ A recursive algorithm is given in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "alg:determinant"
+
+\end_inset
+
+, which computes the determinant of 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+ as the product of the determinant of 
+\begin_inset Formula $\mathbf{V}$
+\end_inset
+
+ and the determinant of 
+\begin_inset Formula $\mathbf{G}$
+\end_inset
+
+.
+ The determinant of 
+\begin_inset Formula $\mathbf{G}$
+\end_inset
+
+ is computed by recursively computing the determinants of its diagonal blocks
+ 
+\begin_inset Formula $\mathbf{G}_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{G}_{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "algorithmDeterminant.lyx"
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Corollary
+The determinant of a nonsingular matrix 
+\begin_inset Formula $\mathbf{F}\in\mathbb{K}\left[x\right]^{n\times n}$
+\end_inset
+
+ can be computed with a cost of 
+\begin_inset Formula $O^{\sim}(n^{\omega}s)$
+\end_inset
+
+ field operations, where 
+\begin_inset Formula $s$
+\end_inset
+
+ is the minimum of the average column degree and the average row degree
+ of the input matrix.
+ 
+\end_layout
+
+\begin_layout Proof
+We can just use Algorithm 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "alg:determinant"
+
+\end_inset
+
+ to compute the diagonal entries of the Hermite normal form of either 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+ or 
+\begin_inset Formula $\mathbf{F}^{T}$
+\end_inset
+
+ with the scaling factor, and then multiply the diagonal entries with the
+ scaling factor.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Let 
+\begin_inset Formula 
+\[
+\mathbf{F}=\left[\begin{array}{rcccc}
+x & -{x}^{3} & -2\,{x}^{4} & 2x & -{x}^{2}\\
+\noalign{\medskip}1 & -1 & -2\, x & 2 & -x\\
+\noalign{\medskip}-3 & 3\,{x}^{2}+x & 2\,{x}^{2} & -\,{x}^{4}+1 & 3\, x\\
+\noalign{\medskip}0 & 1 & {x}^{2}+2\, x-2 & \,{x}^{3}+2x-2 & 0\\
+\noalign{\medskip}1 & -{x}^{2}+2 & -2\,{x}^{3}-3\, x+3 & 2x+2 & 0
+\end{array}\right]
+\]
+
+\end_inset
+
+ working over 
+\begin_inset Formula $\mathbb{Z}_{7}[x]$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $\mathbf{F}_{U}$
+\end_inset
+
+ denotes the top three rows of 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+ then a column basis 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula 
+\[
+\mathbf{G}_{1}=\left[\begin{array}{rcr}
+x & -{x}^{3} & -2\,{x}^{4}\\
+\noalign{\medskip}1 & -1 & -2\, x\\
+\noalign{\medskip}-3 & 3\,{x}^{2}+x & 2\,{x}^{2}
+\end{array}\right]
+\]
+
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ and kernel basis 
+\begin_inset Formula 
+\[
+\mathbf{U}_{R}=\left[\begin{array}{rc}
+-1 & x\\
+-x^{2} & 0\\
+-3x & 0\\
+-3 & 0\\
+0 & 1
+\end{array}\right]
+\]
+
+\end_inset
+
+ were given in Example 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "example1"
+
+\end_inset
+
+.
+ The computation of the column basis also gives the right factor 
+\begin_inset Formula 
+\[
+\mathbf{V}_{U}=\left[\begin{array}{cccrr}
+1 & 0 & 0 & 2 & -x\\
+0 & 1 & 0 & 2x^{2} & 0\\
+0 & 0 & 1 & -x & 0
+\end{array}\right].
+\]
+
+\end_inset
+
+Then 
+\begin_inset Formula 
+\[
+{U}_{R}=\left[\begin{array}{rc}
+-1 & 0\\
+0 & 0\\
+0 & 0\\
+-3 & 0\\
+0 & 1
+\end{array}\right]~\mbox{and}~~{V}_{U}=\left[\begin{array}{cccrr}
+1 & 0 & 0 & 2 & 0\\
+0 & 1 & 0 & 0 & 0\\
+0 & 0 & 1 & 0 & 0
+\end{array}\right].
+\]
+
+\end_inset
+
+A unimodular completion of 
+\begin_inset Formula $U_{R}$
+\end_inset
+
+ is given by 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula 
+\[
+U_{L}^{*}=\left[\begin{array}{ccc}
+1 & 0 & 0\\
+0 & 1 & 0\\
+0 & 0 & 1\\
+0 & 0 & 0\\
+0 & 0 & 0
+\end{array}\right].
+\]
+
+\end_inset
+
+ The determinant of 
+\begin_inset Formula $\mathbf{V}$
+\end_inset
+
+ can then be computed as 
+\begin_inset Formula 
+\[
+\frac{\det\left(V_{U}U_{L}^{*}\right)}{\det\left(U^{*}\right)}=-\frac{1}{3}=2.
+\]
+
+\end_inset
+
+From recursively computing the determinant of 
+\begin_inset Formula $\mathbf{G}_{1}$
+\end_inset
+
+ and the determinant of 
+\begin_inset Formula $\mathbf{G}_{2}$
+\end_inset
+
+, we obtain 
+\begin_inset Formula $\det\mathbf{G}_{1}=x^{6}-x^{4}$
+\end_inset
+
+ and 
+\begin_inset Formula $\det\mathbf{G}_{2}=x^{4}-x$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Example
+Then the determinant of 
+\begin_inset Formula $\mathbf{V}$
+\end_inset
+
+ can be computed as
+\begin_inset Formula 
+\[
+\det\mathbf{V}=\det\mathbf{V}\cdot\det\mathbf{G}_{1}\cdot\det\mathbf{G}_{2}=2\left(x^{6}-x^{4}\right)\left(x^{4}-x\right)=2x^{10}-2x^{8}-2x^{7}+2x^{5}.
+\]
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+qed
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\end_body
+\end_document

@@ -1,0 +1,30 @@
+
+\subsection{Computational cost}
+\begin{thm}
+\label{thm:diagonalCost} Algorithm \prettyref{alg:determinant} %and \prettyref{alg:hermiteDiagonalWithScalingFactor}
+costs $O^{\sim}\left(n^{\omega}s\right)$ field operations to compute
+the determinant of a nonsingular matrix $\mathbf{F}\in\mathbb{K}\left[x\right]^{n\times n}$,
+where $s$ is the average column degree of $\mathbf{F}$. \end{thm}
+\begin{proof}
+From \prettyref{lem:firstDiagonalBlock} and \prettyref{lem:secondDiagonalBlock}
+the computation of the two diagonal blocks $\mathbf{G}_{1}$ and $\mathbf{G}_{2}$
+costs $O^{\sim}\left(n^{\omega}s\right)$ field operations, which
+dominates the cost of the other operations in the algorithm. 
+
+Now for this recursive algorithm, if we let its cost on a subproblem
+be $g(m)$ for the input matrix of dimension $m$, by \prettyref{lem:firstDiagonalBlock}
+and \prettyref{lem:secondDiagonalBlock} the sum of the column degrees
+of the input matrix is still bounded by $ns$, but the average column
+is now $ns/m$. Then the cost 
+\begin{eqnarray*}
+g(m) & \in & O^{\sim}(m^{\omega}\left(ns/m\right))+g(\left\lceil m/2\right\rceil )+g(\left\lfloor m/2\right\rfloor )\\
+ & \in & O^{\sim}(m^{\omega-1}ns)+2g(\left\lceil m/2\right\rceil )\\
+ & \in & O^{\sim}(m^{\omega-1}ns).
+\end{eqnarray*}
+ The cost on the original problem when the dimension $m=n$ is therefore
+$O^{\sim}\left(n^{\omega}s\right)$. %Note that always rounding up $n/2$ to $\left\lceil n/2\right\rceil $ is no worse than assuming 
+%$n$ is a power of $2$. In other words, the entries in the sequence $\left[\left\lceil %n/2\right\rceil ,\left\lceil n/4\right\rceil ,\dots,1\right]$
+%are not larger than the corresponding entries in the sequence $\left[m/2,m/4,\dots,1\right]$,
+%where $m =2^{\left\lceil \log_{2}n\right\rceil }$ is the smallest power of $2$ that is not less %than $n$.
+\end{proof}
+

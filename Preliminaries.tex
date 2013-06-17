@@ -1,0 +1,283 @@
+
+\section{Preliminaries}
+
+In this section we first describe the notations used in this paper,
+and then give the basic definitions and properties of {\em shifted
+degree}, {\em kernel basis} and {\em column basis} for a matrix
+of polynomials. These will be the building blocks used in our algorithm.
+
+
+\subsection{Shifted Degrees}
+
+Our methods makes use of the concept of {\em shifted} degrees of
+polynomial matrices \citet{BLV:1999}, basically shifting the importance
+of the degrees in some of the rows of a basis. For a column vector
+$\mathbf{p}=\left[p_{1},\dots,p_{n}\right]^{T}$ of univariate polynomials
+over a field $\mathbb{K}$, its column degree, denoted by $\cdeg\mathbf{p}$,
+is the maximum of the degrees of the entries of $\mathbf{p}$, that
+is, 
+\[
+\cdeg~\mathbf{p}=\max_{1\le i\le n}\deg p_{i}.
+\]
+ The \emph{shifted column degree} generalizes this standard column
+degree by taking the maximum after shifting the degrees by a given
+integer vector that is known as a \emph{shift}. More specifically,
+the shifted column degree of $\mathbf{p}$ with respect to a shift
+$\vec{s}=\left[s_{1},\dots,s_{n}\right]\in\mathbb{Z}^{n}$, or the
+\emph{$\vec{s}$-column degree} of $\mathbf{p}$ is 
+\[
+\cdeg_{\vec{s}}~\mathbf{p}=\max_{1\le i\le n}[\deg p_{i}+s_{i}]=\deg(x^{\vec{s}}\cdot\mathbf{p}),
+\]
+ where 
+\[
+x^{\vec{s}}=\diag\left(x^{s_{1}},x^{s_{2}},\dots,x^{s_{n}}\right)~.
+\]
+ For a matrix $\mathbf{P}$, we use $\cdeg\mathbf{P}$ and $\cdeg_{\vec{s}}\mathbf{P}$
+to denote respectively the list of its column degrees and the list
+of its shifted $\vec{s}$-column degrees. When $\vec{s}=\left[0,\dots,0\right]$,
+the shifted column degree specializes to the standard column degree.
+Similarly, $\cdeg_{-\vec{s}}\mathbf{P}\leq0$ is equivalent to deg
+$p_{ij}\leq s_{i}$ for all $i$ and $j$, that is, $\vec{s}$ bounds
+the row degrees of $\mathbf{P}$.
+
+The shifted row degree of a row vector \textbf{$\mathbf{q}=\left[q_{1},\dots,q_{n}\right]$}
+is defined similarly as 
+\[
+\rdeg_{\vec{s}}\mathbf{q}=\max_{1\le i\le n}[\deg q_{i}+s_{i}]=\deg(\mathbf{q}\cdot x^{\vec{s}}).
+\]
+ Shifted degrees have been used previously in polynomial matrix computations
+and in generalizations of some matrix normal forms \citet{BLV:jsc06}.
+The shifted column degree is equivalent to the notion of \emph{defect}
+commonly used in the literature.
+
+Along with shifted degrees we also make use of the notion of a matrix
+polynomial being column (or row) reduced. A matrix polynomial $\mathbf{F}$
+is column reduced if the leading column coefficient matrix, that is
+the matrix 
+\[
+[\mbox{coeff}(f_{ij},x,d_{j})]_{1\leq i,j\leq n},\mbox{ with }\vec{d}=\mbox{cdeg }\mathbf{F},
+\]
+ has full rank. A matrix polynomial $\mathbf{F}$ is $\vec{s}$ column
+reduced if $x^{\vec{s}}\mathbf{F}$ is column reduced. A similar concept
+exists for being shifted row reduced.
+
+The usefulness of the shifted degrees can be seen from their applications
+in polynomial matrix computation problems \citet{ZL2012,za2012}.
+One of its uses is illustrated by the following lemma from \citet[Chapter 2]{zhou:phd2012},
+which can be viewed as a stronger version of the predictable-degree
+property \citet[page 387]{kailath:1980}. For completeness we also
+include the proof. 
+\begin{lem}
+\label{lem:predictableDegree} Let $\mathbf{A}\in\mathbb{K}\left[x\right]^{m\times n}$
+be a $\vec{u}$-column reduced matrix with no zero columns and with
+$\cdeg_{\vec{u}}\mathbf{A}=\vec{v}$. Then a matrix $\mathbf{B}\in\mathbb{K}\left[x\right]^{n\times k}$
+has $\vec{v}$-column degrees $\cdeg_{\vec{v}}\mathbf{B}=\vec{w}$
+if and only if $\cdeg_{\vec{u}}\left(\mathbf{A}\mathbf{B}\right)=\vec{w}$. \end{lem}
+\begin{proof}
+Being $\vec{u}$-column reduced with $\cdeg_{\vec{u}}\mathbf{A}=\vec{v}$
+is equivalent to the leading coefficient matrix of $x^{\vec{u}}\cdot\mathbf{A}\cdot x^{-\vec{v}}$
+having linearly independent columns. The leading coefficient matrix
+of $x^{\vec{v}}\cdot\mathbf{B}\cdot x^{-\vec{w}}$ has no zero column
+if and only if the leading coefficient matrix of 
+\[
+x^{\vec{u}}\cdot\mathbf{AB}\cdot x^{-\vec{w}}=x^{\vec{u}}\cdot\mathbf{A}\cdot x^{-\vec{v}}x^{\vec{v}}\cdot\mathbf{B}\cdot x^{-\vec{w}}.
+\]
+ That is, $x^{\vec{v}}\cdot\mathbf{B}\cdot x^{-\vec{w}}$ has column
+degree $\vec{0}$ if and only if $x^{\vec{u}}\cdot\mathbf{AB}\cdot x^{-\vec{w}}$
+has column degree $\vec{0}$. 
+\end{proof}
+An essential fact needed in this paper, also based on the use of shifted
+degrees, is the efficient multiplication of matrices with unbalanced
+degrees \citet[Theorem 3.7]{za2012}. 
+\begin{thm}
+\label{thm:multiplyUnbalancedMatrices} Let $\mathbf{A}\in\mathbb{K}\left[x\right]^{m\times n}$
+with $m\le n$, $\vec{s}\in\mathbb{Z}^{n}$ a shift with entries bounding
+the column degrees of $\mathbf{A}$ and $\xi$, a bound on the sum
+of the entries of $\vec{s}$. Let $\mathbf{B}\in\mathbb{K}\left[x\right]^{n\times k}$
+with $k\in O\left(m\right)$ and the sum $\theta$ of its $\vec{s}$-column
+degrees satisfying $\theta\in O\left(\xi\right)$. Then we can multiply
+$\mathbf{A}$ and $\mathbf{B}$ with a cost of $O^{\sim}(n^{2}m^{\omega-2}s)\subset O^{\sim}(n^{\omega}s)$
+field operations, where $s=\xi/n$ is the average of the entries of
+$\vec{s}$. 
+\end{thm}
+
+\subsection{Kernel Bases}
+
+The kernel of $\mathbf{F}\in\mathbb{K}\left[x\right]^{m\times n}$
+is the $\mathbb{F}\left[x\right]$-module 
+\[
+\left\{ \mathbf{p}\in\mathbb{K}\left[x\right]^{n}~|~\mathbf{F}\mathbf{p}=0\right\} 
+\]
+ with a kernel basis of $\mathbf{F}$ being a basis of this module.
+Formally, we have:
+\begin{defn}
+\label{def:kernelBasis}Given $\mathbf{F}\in\mathbb{K}\left[x\right]^{m\times n}$,
+a polynomial matrix $\mathbf{N}\in\mathbb{K}\left[x\right]^{n\times k}$
+is a (right) kernel basis of $\mathbf{F}$ if the following properties
+hold: 
+\begin{enumerate}
+\item $\mathbf{N}$ is full-rank. 
+\item $\mathbf{N}$ satisfies $\mathbf{F}\cdot\mathbf{N}=0$. 
+\item Any $\mathbf{q}\in\mathbb{K}\left[x\right]^{n}$ satisfying $\mathbf{F}\mathbf{q}=0$
+can be expressed as a linear combination of the columns of $\mathbf{N}$,
+that is, there exists some polynomial vector $\mathbf{p}$ such that
+$\mathbf{q}=\mathbf{N}\mathbf{p}$. 
+\end{enumerate}
+\end{defn}
+It is not difficult to show that any pair of kernel bases $\mathbf{N}$
+and $\mathbf{M}$ of $\mathbf{F}$ %are column bases of each other and 
+are unimodularly equivalent.
+
+A $\vec{s}$-minimal kernel basis of $\mathbf{F}$ is just a kernel
+basis that is $\vec{s}$-column reduced. 
+\begin{defn}
+Given $\mathbf{F}\in\mathbb{K}\left[x\right]^{m\times n}$, a polynomial
+matrix $\mathbf{N}\in\mathbb{K}\left[x\right]^{n\times k}$ is a $\vec{s}$-minimal
+(right) kernel basis of $\mathbf{F}$ if\textbf{ $\mathbf{N}$} is
+a kernel basis of $\mathbf{F}$ and $\mathbf{N}$ is $\vec{s}$-column
+reduced. We also call a $\vec{s}$-minimal (right) kernel basis of
+$\mathbf{F}$ a $\left(\mathbf{F},\vec{s}\right)$-kernel basis.
+
+%We will need to use the following bound on the sizes of kernel bases
+%from \cite{za2012}.
+
+\end{defn}
+%\begin{thm}
+%\label{thm:boundOfSumOfShiftedDegreesOfKernelBasis}Suppose %$\mathbf{F}\in\mathbb{K}\left[x\right]^{m\times n}$
+%and $\vec{s}\in\mathbb{Z}_{\ge0}^{n}$ is a shift with entries bounding
+%the corresponding column degrees of $\mathbf{F}$. Then the sum of
+%the $\vec{s}$-column degrees of any $\vec{s}$-minimal kernel basis
+%of $\mathbf{F}$ is bounded by $\sum\vec{s}$.
+%\end{thm}
+%We will need the following result from \cite{za2012} to compute kernel bases by rows. 
+%\begin{thm}
+%\label{thm:continueComputingKernelBasisByRows}Let $\mathbf{G}=\left[\mathbf{G}_{1}^{T},%\mathbf{G}_{2}^{T}\right]^{T}\in\mathbb{K}\left[x\right]^{m\times n}$
+%and $\vec{t}\in\mathbb{Z}^{n}$ a shift vector. If $\mathbf{N}_{1}$
+%is a $\left(\mathbf{G}_{1},\vec{t}\right)$-kernel basis with $\vec{t}$-column
+%degrees $\vec{u}$, and $\mathbf{N}_{2}$ is a $\left(\mathbf{G}_{2}\mathbf{N}_{1},\vec{u}\right)$-%kernel
+%basis with $\vec{u}$-column degrees $\vec{v}$, then $\mathbf{N}_{1}\mathbf{N}_{2}$
+%is a $\left(\mathbf{G},\vec{t}\right)$-kernel basis $\vec{t}$-column
+%degrees $\vec{v}$. 
+%\end{thm}
+
+
+%\subsection{Column Bases}
+
+
+We will need the following result from \citet{za2012} to bound the
+sizes of kernel bases.
+\begin{thm}
+\label{thm:boundOfSumOfShiftedDegreesOfKernelBasis}Suppose $\mathbf{F}\in\mathbb{K}\left[x\right]^{m\times n}$
+and $\vec{s}\in\mathbb{Z}_{\ge0}^{n}$ is a shift with entries bounding
+the corresponding column degrees of $\mathbf{F}$. Then the sum of
+the $\vec{s}$-column degrees of any $\vec{s}$-minimal kernel basis
+of $\mathbf{F}$ is bounded by $\sum\vec{s}$. 
+\end{thm}
+A column basis of $\mathbf{F}$ is a basis for the $\mathbb{K}\left[x\right]$-module
+\[
+\left\{ \mathbf{F}\mathbf{p}~|~\mathbf{p}\in\mathbb{K}\left[x\right]^{n}~\right\} ~.
+\]
+ Such a basis can be represented as a full rank matrix $\mathbf{T}\in\mathbb{K}\left[x\right]^{m\times r}$
+whose columns are the basis elements. A column basis is not unique
+and indeed any column basis right multiplied by a unimodular polynomial
+matrix gives another column basis.
+
+The cost of kernel basis computation is given in \citet{za2012} while
+the cost of column basis computation is given in \citet{za2013}.
+In both cases they make heavy use of fast methods for order bases
+(often also referred to as minimal approximant bases) \citet{BeLa94,Giorgi2003,ZL2012}.
+\begin{thm}
+\label{thm:costGeneral} Let $\mathbf{F}\in\mathbb{K}\left[x\right]^{m\times n}$
+with $\vec{s}=\cdeg\mathbf{F}$. Then a $\left(\mathbf{F},\vec{s}\right)$-kernel
+basis can be computed with a cost of $O^{\sim}\left(n^{\omega}s\right)$field
+operations where $s=\sum\vec{s}/n$ is the average column degree of
+$\mathbf{F}$. 
+\end{thm}
+~
+\begin{thm}
+\label{thm:fastcolbasis} There exists a fast, deterministic algorithm
+for the computation of a column basis of a matrix polynomial $\mathbf{F}$
+having complexity $O^{\sim}\left(nm^{\omega-1}s\right)$ field operations
+in $\mathbb{K}$ with $s$ being the average average column degree
+of $\mathbf{F}$. In addition, the column basis computed has column
+degrees bounded by the $r$ largest column degrees of $\mathbf{F}$,
+where $r$ is the rank of $\mathbf{F}$.
+\end{thm}
+Column bases and kernel bases are closely related, as shown by the
+following result from \citet{za2013,zhou:phd2012}.
+\begin{lem}
+\label{lem:unimodular_kernel_columnBasis} Let $\mathbf{F}\in\mathbb{K}\left[x\right]^{m\times n}$
+and suppose $\mathbf{U}\in\mathbb{K}\left[x\right]^{n\times n}$ is
+a unimodular matrix such that $\mathbf{F}\mathbf{U}=\left[0,\mathbf{T}\right]$
+with $\mathbf{T}$ of full column rank. Partition $\mathbf{U}=\left[\mathbf{U}_{L},\mathbf{U}_{R}\right]$
+such that $\mathbf{F}\cdot\mathbf{U}_{L}=0$ and $\mathbf{F}\mathbf{U}_{R}=\mathbf{T}$.
+Then 
+\begin{enumerate}
+\item $\mathbf{U}_{L}$ is a kernel basis of $\mathbf{F}$ and $\mathbf{T}$
+is a column basis of~$\mathbf{F}$. 
+\item If $\mathbf{N}$ is any other kernel basis of $\mathbf{F}$, then
+$\mathbf{U}^{*}=\left[\mathbf{N},~\mathbf{U}_{R}\right]$ is also
+unimodular and also unimodularly transforms $\mathbf{F}$ to $\left[0,\mathbf{T}\right]$. 
+\end{enumerate}
+\end{lem}
+~
+\begin{lem}
+\label{lem:colBasisdegreeBoundByRdegOfRightFactor}A column basis
+$\mathbf{T}$ of $\mathbf{F}$ computed using the algorithm 
+
+and $\mathbf{G}$ be as before and $\vec{t}=-\rdeg_{-\vec{s}}\mathbf{G}$.
+Then 
+\begin{itemize}
+\item [(i)] the column degrees of $\mathbf{T}$ are bounded by the corresponding
+entries of $\vec{t}$; 
+\item [(ii)] if $\vec{t}$ has $r$ entries and $\vec{s}^{~\prime}$ is
+the list of the $r$ largest entries of $\vec{s}$, then $\vec{t}\le\vec{s}^{~\prime}$. 
+\end{itemize}
+\end{lem}
+
+\subsection{Example}
+\begin{example*}
+\label{ex:example1} Let 
+\[
+\mathbf{F}=\left[\begin{array}{rcrcr}
+x & -{x}^{3} & -2\,{x}^{4} & 2x & -{x}^{2}\\
+\noalign{\medskip}1 & -1 & -2\, x & 2 & -x\\
+\noalign{\medskip}-3 & 3\,{x}^{2}+x & 2\,{x}^{2} & -\,{x}^{4}+1 & 3\, x
+\end{array}\right]
+\]
+ be a $3\times5$ matrix over $\mathbb{Z}_{7}[x]$ having column degree
+$\vec{s}=(1,3,4,4,2)$. Then a column space, $\mathbf{G}$, and a
+kernel basis, $\mathbf{N}$, of $\mathbf{F}$ are given by 
+\[
+\mathbf{G}=\left[\begin{array}{rcr}
+x & -{x}^{3} & -2\,{x}^{4}\\
+\noalign{\medskip}1 & -1 & -2\, x\\
+\noalign{\medskip}-3 & 3\,{x}^{2}+x & 2\,{x}^{2}
+\end{array}\right]~~\mbox{ and }~~\mathbf{N}:=\left[\begin{array}{rc}
+-1 & x\\
+\noalign{\medskip}-{x}^{2} & 0\\
+\noalign{\medskip}-3\, x & 0\\
+\noalign{\medskip}-3 & 0\\
+\noalign{\medskip}0 & 1
+\end{array}\right]~.
+\]
+ For example, if $\{\mathbf{g}_{i}\}_{i=1,...,5}$ denote the columns
+of $\mathbf{G}$ then column $4$ of $\mathbf{F}$ - denoted by $\mathbf{f}_{4}$
+- is given by 
+\[
+\mathbf{f}_{4}=-2~\mathbf{g}_{1}-2x^{2}~\mathbf{g}_{2}+x~\mathbf{g}_{3}+2~\mathbf{g}_{4}.
+\]
+ Here $\cdeg_{\vec{s}}\mathbf{N}=(5,2)$ with shifted leading coefficient
+matrix 
+\[
+\mbox{lcoeff}_{\vec{s}}(\mathbf{N})=\left[\begin{array}{rc}
+0 & 1\\
+-1 & 0\\
+-3 & 0\\
+0 & 0\\
+0 & 1
+\end{array}\right].
+\]
+ Since $\mbox{ lcoeff}_{\vec{s}}(\mathbf{N})$ has full rank we have
+that $\mathbf{N}$ is a $\vec{s}$-minimal kernel basis. \qed \end{example*}
+

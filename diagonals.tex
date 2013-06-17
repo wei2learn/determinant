@@ -1,0 +1,145 @@
+
+\section{\label{sec:diagonals}Recursive Computation}
+
+In this section we show how to recursively compute the determinant
+of a nonsingular input matrix $\mathbf{F}\in\mathbb{K}\left[x\right]^{n\times n}$
+with column degrees $\vec{s}$. The computation makes use of fast
+kernel and column basis computation.
+
+Consider unimodularly transforming $\mathbf{F}$ to 
+\begin{equation}
+\mathbf{F}\mathbf{U}=\mathbf{G}=\begin{bmatrix}\mathbf{G}_{1} & 0\\
+* & \mathbf{G}_{2}
+\end{bmatrix},\label{eq:step1HermiteDiagonal}
+\end{equation}
+which eliminates a top right block and gives two square diagonal blocks
+$\mathbf{G}_{1}$ and\textbf{ $\mathbf{G}_{2}$} in $\mathbf{G}$.
+Then the determinant of $\mathbf{F}$ can be computed as 
+\begin{equation}
+\det\mathbf{F}=\frac{\det\mathbf{G}}{\det\mathbf{U}}=\frac{\det\mathbf{G}_{1}\cdot\det\mathbf{G}_{2}}{\det\mathbf{U}},\label{eq:determinantFromDiagonalBlocks}
+\end{equation}
+ which requires us to first compute $\det\mathbf{G}_{1}$, $\det\mathbf{G}_{2}$,
+and $\det\mathbf{U}$. The same procedure can then be applied recursively
+to compute the determinant of $\mathbf{G}_{1}$ and the determinant
+of $\mathbf{G}_{2}$. This can be repeated recursively until the dimension
+becomes 1. 
+
+One major obstacle of this approach, however, is that the degrees
+of the unimodular matrix $\mathbf{U}$ and the matrix $\mathbf{G}$
+can be too large for efficient computation. %
+\begin{comment}
+To construct such an example, just use a random $k\times\left(k+1\right)$
+matrix $\mathbf{A}$, and set $\mathbf{F}=\begin{bmatrix}\mathbf{A} & 0\\
+* & *
+\end{bmatrix}$, and compute $\mathbf{G}_{1}$ as a column basis of $\mathbf{A}$.
+Then the degrees of $\mathbf{U}$ and $\mathbf{G}$ are often $\Theta(nd)$.
+\end{comment}
+{} To sidestep this, we will show that the matrices $\mathbf{G}_{1}$,\textbf{
+$\mathbf{G}_{2}$}, and $\det\mathbf{U}$ can be in fact computed
+without computing the matrices $\mathbf{G}$ and $\mathbf{U}$. 
+
+
+\subsection{Computing the diagonal blocks}
+
+Suppose we want $\mathbf{G}_{1}$ to have dimension $k$. We can partition\textbf{
+$\mathbf{F}$ }as $\mathbf{F}=\begin{bmatrix}\mathbf{F}_{U}\\
+\mathbf{F}_{D}
+\end{bmatrix}$ with $k$ rows in $\mathbf{F}_{U}$, then both $\mathbf{F}_{U}$
+and $\mathbf{F}_{D}$ are of full-rank since $\mathbf{F}$ is assumed
+to be nonsingular. By partitioning $\mathbf{U}=\begin{bmatrix}\mathbf{U}_{L}~~, & \mathbf{U}_{R}\end{bmatrix}$,
+with $k$ columns in $\mathbf{U}_{L}$, then 
+\begin{equation}
+\mathbf{F}\mathbf{U}=\begin{bmatrix}\mathbf{F}_{U}\\
+\mathbf{F}_{D}
+\end{bmatrix}\begin{bmatrix}\mathbf{U}_{L} & \mathbf{U}_{R}\end{bmatrix}=\begin{bmatrix}\mathbf{G}_{1} & 0\\
+* & \mathbf{G}_{2}
+\end{bmatrix}=\mathbf{G}.\label{eq:UPartitioned}
+\end{equation}
+ Notice that the matrix $\mathbf{G}_{1}$ is nonsingular and is therefore
+a column basis of $\mathbf{F}_{U}$. As such this can be efficiently
+computed %using \cite{za2013} 
+as mentioned in Theorem \ref{thm:fastcolbasis}. In addition, the
+column basis algorithm makes the resulting column degrees of $\mathbf{G}_{1}$
+small enough for $\mathbf{G}_{1}$ to be efficiently used again as
+the input matrix of a new subproblem in the recursive procedure.
+\begin{lem}
+\label{lem:firstDiagonalBlock}The first diagonal block $\mathbf{G}_{1}$
+in $\mathbf{G}$ can be computed with a cost of $O^{\sim}\left(n^{\omega}s\right)$
+and with column degrees bounded by the $k$ largest column degrees
+of $\mathbf{F}$.
+\end{lem}
+For computing the second diagonal block $\mathbf{G}_{2}$, notice
+that we do not need a complete unimodular matrix $\mathbf{U}$, only
+$\mathbf{U}_{R}$ is needed to compute $\mathbf{G}_{2}=\mathbf{F}_{D}\mathbf{U}_{R}$.
+In fact, \prettyref{lem:unimodular_kernel_columnBasis} tells us much
+more. It tells us that the matrix $\mathbf{U}_{R}$ is a right kernel
+basis of $\mathbf{F}$, which makes the top right block of $\mathbf{G}$
+zero, and the kernel basis $\mathbf{U}_{R}$ can be replaced by any
+other kernel basis of $\mathbf{F}$ to give another unimodular matrix
+that also transforms $\mathbf{F}_{U}$ to a column basis and also
+eliminates the top right block of $\mathbf{G}$. 
+\begin{lem}
+\label{lem:oneStepHermiteDiagonal} Partition $\mathbf{F}=\begin{bmatrix}\mathbf{F}_{U}\\
+\mathbf{F}_{D}
+\end{bmatrix}$ and suppose $\mathbf{G}_{1}$ is a column basis of $\mathbf{F}_{U}$
+and $\mathbf{N}$ a kernel basis of $\mathbf{F}_{U}$. Then there
+is a unimodular matrix $\mathbf{U}=\left[~*~,~\mathbf{N}\right]$
+such that 
+\[
+\mathbf{F}\mathbf{U}=\begin{bmatrix}\mathbf{G}_{1} & 0\\
+* & \mathbf{G}_{2}
+\end{bmatrix},
+\]
+ where $\mathbf{G}_{2}=\mathbf{F}_{D}\mathbf{N}$. If $\mathbf{F}$
+is square nonsingular, then $\mathbf{G}_{1}$ and $\mathbf{G}_{2}$
+are also square nonsingular. 
+\end{lem}
+Note that the block represented by the symbol $*$ is not needed in
+our computation. This block may have very large degrees and cannot
+be computed efficiently. Now we can also determine $\mathbf{G}_{1}$
+and $\mathbf{G}_{2}$ without computing the unimodular matrix $\mathbf{U}$.
+%$\mathbf{G}_{1}$ can be computed using the method from \cite{za2013},
+%while the kernel basis computation from \cite{za2012}
+%can be used to compute a kernel basis $\mathbf{N}$ of $\mathbf{F}_{U}$,
+%which can then in turn be used to compute $\mathbf{G}_{2}=\mathbf{F}_{D}\mathbf{N}$.
+%The particular kernel basis $\mathbf{N}$ found from \cite{za2012} has the degree bounds 
+%needed in Theorem \ref{thm:multiplyUnbalancedMatrices} and hence this multiplication can also be done efficiently.
+%After $\mathbf{G}_{1}$ and $\mathbf{G}_{2}$ are computed, we can
+%repeat the same process on each of these two matrices, which now have
+%lower dimensions, until the dimension becomes one. 
+ 
+
+For this recursive procedure to be efficient, we must be able to compute
+$\mathbf{G}_{2}$ efficiently, which can be done by using the existing
+algorithms for kernel basis computation and the multiplication of
+matrices with unbalanced degrees. We also require that the column
+degrees of $\mathbf{G}_{2}$ to be small enough for $\mathbf{G}_{2}$
+to be efficiently used again as the input matrix of a new subproblem
+in the recursive procedure.
+\begin{lem}
+\label{lem:secondDiagonalBlock}We can compute the second diagonal
+block $\mathbf{G}_{2}$ with a cost of $O^{\sim}\left(n^{\omega}s\right)$
+field operations and have $\sum\cdeg\mathbf{G}_{2}\le\sum\vec{s}$.\end{lem}
+\begin{proof}
+We know $\mathbf{G}_{2}=\mathbf{F}_{D}\mathbf{N}$ from \prettyref{lem:oneStepHermiteDiagonal}
+for a kernel basis $\mathbf{N}$ of $\mathbf{F}_{U}$. In fact, this
+kernel basis can be made $\vec{s}$-minimal using the algorithm from
+\citet{za2012}, and computing such a $\vec{s}$-minimal kernel basis
+of $\mathbf{F}_{U}$ costs $O^{\sim}\left(n^{\omega}s\right)$ field
+operations by \prettyref{thm:costGeneral}. In addition, the sum of
+the $\vec{s}$-column degrees of such a $\vec{s}$-minimal $\mathbf{N}$
+is bounded by $\sum\vec{s}$.
+
+For the matrix multiplication $\mathbf{F}_{D}\mathbf{N}$, the sum
+of the column degrees of $\mathbf{F}_{D}$ and the sum of the $\vec{s}$-column
+degrees of $\mathbf{N}$ are both bounded by $\sum\vec{s}$. Therefore
+Theorem \ref{thm:multiplyUnbalancedMatrices} (see also \citet[Theorem 3.7]{za2012})
+applies and the multiplication can be done with a cost of $O^{\sim}\left(n^{\omega}s\right)$.
+
+With $\mathbf{N}$ computed, we can then apply \prettyref{thm:multiplyUnbalancedMatrices}
+directly to multiply $\mathbf{F}_{D}$ and $\mathbf{N}$ with a cost
+of $O^{\sim}\left(n^{\omega}s\right)$ field operations. 
+\end{proof}
+%Let us look at the computational cost of Algorithm \prettyref{alg:hermiteDiagonal}.
+%and \prettyref{alg:hermiteDiagonalWithScalingFactor}. 
+

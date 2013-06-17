@@ -1,0 +1,1804 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass amsart
+\use_default_options false
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding latin9
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 2
+\use_esint 1
+\use_mhchem 0
+\use_mathdots 1
+\cite_engine natbib_authoryear
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Preliminaries
+\end_layout
+
+\begin_layout Standard
+In this section we first describe the notations used in this paper, and
+ then give the basic definitions and properties of 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+em
+\end_layout
+
+\end_inset
+
+ shifted degree
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+, 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+em
+\end_layout
+
+\end_inset
+
+ kernel basis
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ and 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+em
+\end_layout
+
+\end_inset
+
+ column basis
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ for a matrix of polynomials.
+ These will be the building blocks used in our algorithm.
+\end_layout
+
+\begin_layout Subsection
+Shifted Degrees
+\end_layout
+
+\begin_layout Standard
+Our methods makes use of the concept of 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+em
+\end_layout
+
+\end_inset
+
+ shifted
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ degrees of polynomial matrices 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "BLV:1999"
+
+\end_inset
+
+, basically shifting the importance of the degrees in some of the rows of
+ a basis.
+ For a column vector 
+\begin_inset Formula $\mathbf{p}=\left[p_{1},\dots,p_{n}\right]^{T}$
+\end_inset
+
+ of univariate polynomials over a field 
+\begin_inset Formula $\mathbb{K}$
+\end_inset
+
+, its column degree, denoted by 
+\begin_inset Formula $\cdeg\mathbf{p}$
+\end_inset
+
+, is the maximum of the degrees of the entries of 
+\begin_inset Formula $\mathbf{p}$
+\end_inset
+
+, that is, 
+\begin_inset Formula 
+\[
+\cdeg~\mathbf{p}=\max_{1\le i\le n}\deg p_{i}.
+\]
+
+\end_inset
+
+ The 
+\emph on
+shifted column degree
+\emph default
+ generalizes this standard column degree by taking the maximum after shifting
+ the degrees by a given integer vector that is known as a 
+\emph on
+shift
+\emph default
+.
+ More specifically, the shifted column degree of 
+\begin_inset Formula $\mathbf{p}$
+\end_inset
+
+ with respect to a shift 
+\begin_inset Formula $\vec{s}=\left[s_{1},\dots,s_{n}\right]\in\mathbb{Z}^{n}$
+\end_inset
+
+, or the 
+\emph on
+
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+-column degree
+\emph default
+ of 
+\begin_inset Formula $\mathbf{p}$
+\end_inset
+
+ is 
+\begin_inset Formula 
+\[
+\cdeg_{\vec{s}}~\mathbf{p}=\max_{1\le i\le n}[\deg p_{i}+s_{i}]=\deg(x^{\vec{s}}\cdot\mathbf{p}),
+\]
+
+\end_inset
+
+ where 
+\begin_inset Formula 
+\[
+x^{\vec{s}}=\diag\left(x^{s_{1}},x^{s_{2}},\dots,x^{s_{n}}\right)~.
+\]
+
+\end_inset
+
+ For a matrix 
+\begin_inset Formula $\mathbf{P}$
+\end_inset
+
+, we use 
+\begin_inset Formula $\cdeg\mathbf{P}$
+\end_inset
+
+ and 
+\begin_inset Formula $\cdeg_{\vec{s}}\mathbf{P}$
+\end_inset
+
+ to denote respectively the list of its column degrees and the list of its
+ shifted 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+-column degrees.
+ When 
+\begin_inset Formula $\vec{s}=\left[0,\dots,0\right]$
+\end_inset
+
+, the shifted column degree specializes to the standard column degree.
+ Similarly, 
+\begin_inset Formula $\cdeg_{-\vec{s}}\mathbf{P}\leq0$
+\end_inset
+
+ is equivalent to deg 
+\begin_inset Formula $p_{ij}\leq s_{i}$
+\end_inset
+
+ for all 
+\begin_inset Formula $i$
+\end_inset
+
+ and 
+\begin_inset Formula $j$
+\end_inset
+
+, that is, 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+ bounds the row degrees of 
+\begin_inset Formula $\mathbf{P}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The shifted row degree of a row vector 
+\series bold
+
+\begin_inset Formula $\mathbf{q}=\left[q_{1},\dots,q_{n}\right]$
+\end_inset
+
+
+\series default
+ is defined similarly as 
+\begin_inset Formula 
+\[
+\rdeg_{\vec{s}}\mathbf{q}=\max_{1\le i\le n}[\deg q_{i}+s_{i}]=\deg(\mathbf{q}\cdot x^{\vec{s}}).
+\]
+
+\end_inset
+
+ Shifted degrees have been used previously in polynomial matrix computations
+ and in generalizations of some matrix normal forms 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "BLV:jsc06"
+
+\end_inset
+
+.
+ The shifted column degree is equivalent to the notion of 
+\emph on
+defect
+\emph default
+ commonly used in the literature.
+\end_layout
+
+\begin_layout Standard
+Along with shifted degrees we also make use of the notion of a matrix polynomial
+ being column (or row) reduced.
+ A matrix polynomial 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+ is column reduced if the leading column coefficient matrix, that is the
+ matrix 
+\begin_inset Formula 
+\[
+[\mbox{coeff}(f_{ij},x,d_{j})]_{1\leq i,j\leq n},\mbox{ with }\vec{d}=\mbox{cdeg }\mathbf{F},
+\]
+
+\end_inset
+
+ has full rank.
+ A matrix polynomial 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+ is 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+ column reduced if 
+\begin_inset Formula $x^{\vec{s}}\mathbf{F}$
+\end_inset
+
+ is column reduced.
+ A similar concept exists for being shifted row reduced.
+\end_layout
+
+\begin_layout Standard
+The usefulness of the shifted degrees can be seen from their applications
+ in polynomial matrix computation problems 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ZL2012,za2012"
+
+\end_inset
+
+.
+ One of its uses is illustrated by the following lemma from 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Chapter 2"
+key "zhou:phd2012"
+
+\end_inset
+
+, which can be viewed as a stronger version of the predictable-degree property
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "page 387"
+key "kailath:1980"
+
+\end_inset
+
+.
+ For completeness we also include the proof.
+ 
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:predictableDegree"
+
+\end_inset
+
+ Let 
+\begin_inset Formula $\mathbf{A}\in\mathbb{K}\left[x\right]^{m\times n}$
+\end_inset
+
+ be a 
+\begin_inset Formula $\vec{u}$
+\end_inset
+
+-column reduced matrix with no zero columns and with 
+\begin_inset Formula $\cdeg_{\vec{u}}\mathbf{A}=\vec{v}$
+\end_inset
+
+.
+ Then a matrix 
+\begin_inset Formula $\mathbf{B}\in\mathbb{K}\left[x\right]^{n\times k}$
+\end_inset
+
+ has 
+\begin_inset Formula $\vec{v}$
+\end_inset
+
+-column degrees 
+\begin_inset Formula $\cdeg_{\vec{v}}\mathbf{B}=\vec{w}$
+\end_inset
+
+ if and only if 
+\begin_inset Formula $\cdeg_{\vec{u}}\left(\mathbf{A}\mathbf{B}\right)=\vec{w}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Proof
+Being 
+\begin_inset Formula $\vec{u}$
+\end_inset
+
+-column reduced with 
+\begin_inset Formula $\cdeg_{\vec{u}}\mathbf{A}=\vec{v}$
+\end_inset
+
+ is equivalent to the leading coefficient matrix of 
+\begin_inset Formula $x^{\vec{u}}\cdot\mathbf{A}\cdot x^{-\vec{v}}$
+\end_inset
+
+ having linearly independent columns.
+ The leading coefficient matrix of 
+\begin_inset Formula $x^{\vec{v}}\cdot\mathbf{B}\cdot x^{-\vec{w}}$
+\end_inset
+
+ has no zero column if and only if the leading coefficient matrix of 
+\begin_inset Formula 
+\[
+x^{\vec{u}}\cdot\mathbf{AB}\cdot x^{-\vec{w}}=x^{\vec{u}}\cdot\mathbf{A}\cdot x^{-\vec{v}}x^{\vec{v}}\cdot\mathbf{B}\cdot x^{-\vec{w}}.
+\]
+
+\end_inset
+
+ That is, 
+\begin_inset Formula $x^{\vec{v}}\cdot\mathbf{B}\cdot x^{-\vec{w}}$
+\end_inset
+
+ has column degree 
+\begin_inset Formula $\vec{0}$
+\end_inset
+
+ if and only if 
+\begin_inset Formula $x^{\vec{u}}\cdot\mathbf{AB}\cdot x^{-\vec{w}}$
+\end_inset
+
+ has column degree 
+\begin_inset Formula $\vec{0}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+An essential fact needed in this paper, also based on the use of shifted
+ degrees, is the efficient multiplication of matrices with unbalanced degrees
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Theorem 3.7"
+key "za2012"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:multiplyUnbalancedMatrices"
+
+\end_inset
+
+ Let 
+\begin_inset Formula $\mathbf{A}\in\mathbb{K}\left[x\right]^{m\times n}$
+\end_inset
+
+ with 
+\begin_inset Formula $m\le n$
+\end_inset
+
+, 
+\begin_inset Formula $\vec{s}\in\mathbb{Z}^{n}$
+\end_inset
+
+ a shift with entries bounding the column degrees of 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ and 
+\begin_inset Formula $\xi$
+\end_inset
+
+, a bound on the sum of the entries of 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $\mathbf{B}\in\mathbb{K}\left[x\right]^{n\times k}$
+\end_inset
+
+ with 
+\begin_inset Formula $k\in O\left(m\right)$
+\end_inset
+
+ and the sum 
+\begin_inset Formula $\theta$
+\end_inset
+
+ of its 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+-column degrees satisfying 
+\begin_inset Formula $\theta\in O\left(\xi\right)$
+\end_inset
+
+.
+ Then we can multiply 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{B}$
+\end_inset
+
+ with a cost of 
+\begin_inset Formula $O^{\sim}(n^{2}m^{\omega-2}s)\subset O^{\sim}(n^{\omega}s)$
+\end_inset
+
+ field operations, where 
+\begin_inset Formula $s=\xi/n$
+\end_inset
+
+ is the average of the entries of 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Subsection
+Kernel Bases
+\end_layout
+
+\begin_layout Standard
+The kernel of 
+\begin_inset Formula $\mathbf{F}\in\mathbb{K}\left[x\right]^{m\times n}$
+\end_inset
+
+ is the 
+\begin_inset Formula $\mathbb{F}\left[x\right]$
+\end_inset
+
+-module 
+\begin_inset Formula 
+\[
+\left\{ \mathbf{p}\in\mathbb{K}\left[x\right]^{n}~|~\mathbf{F}\mathbf{p}=0\right\} 
+\]
+
+\end_inset
+
+ with a kernel basis of 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+ being a basis of this module.
+ Formally, we have:
+\end_layout
+
+\begin_layout Definition
+\begin_inset CommandInset label
+LatexCommand label
+name "def:kernelBasis"
+
+\end_inset
+
+Given 
+\begin_inset Formula $\mathbf{F}\in\mathbb{K}\left[x\right]^{m\times n}$
+\end_inset
+
+, a polynomial matrix 
+\begin_inset Formula $\mathbf{N}\in\mathbb{K}\left[x\right]^{n\times k}$
+\end_inset
+
+ is a (right) kernel basis of 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+ if the following properties hold: 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $\mathbf{N}$
+\end_inset
+
+ is full-rank.
+ 
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\mathbf{N}$
+\end_inset
+
+ satisfies 
+\begin_inset Formula $\mathbf{F}\cdot\mathbf{N}=0$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Any 
+\begin_inset Formula $\mathbf{q}\in\mathbb{K}\left[x\right]^{n}$
+\end_inset
+
+ satisfying 
+\begin_inset Formula $\mathbf{F}\mathbf{q}=0$
+\end_inset
+
+ can be expressed as a linear combination of the columns of 
+\begin_inset Formula $\mathbf{N}$
+\end_inset
+
+, that is, there exists some polynomial vector 
+\begin_inset Formula $\mathbf{p}$
+\end_inset
+
+ such that 
+\begin_inset Formula $\mathbf{q}=\mathbf{N}\mathbf{p}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+It is not difficult to show that any pair of kernel bases 
+\begin_inset Formula $\mathbf{N}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{M}$
+\end_inset
+
+ of 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%are column bases of each other and 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+are unimodularly equivalent.
+\end_layout
+
+\begin_layout Standard
+A 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+-minimal kernel basis of 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+ is just a kernel basis that is 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+-column reduced.
+ 
+\end_layout
+
+\begin_layout Definition
+Given 
+\begin_inset Formula $\mathbf{F}\in\mathbb{K}\left[x\right]^{m\times n}$
+\end_inset
+
+, a polynomial matrix 
+\begin_inset Formula $\mathbf{N}\in\mathbb{K}\left[x\right]^{n\times k}$
+\end_inset
+
+ is a 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+-minimal (right) kernel basis of 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+ if
+\series bold
+ 
+\begin_inset Formula $\mathbf{N}$
+\end_inset
+
+
+\series default
+ is a kernel basis of 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{N}$
+\end_inset
+
+ is 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+-column reduced.
+ We also call a 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+-minimal (right) kernel basis of 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+ a 
+\begin_inset Formula $\left(\mathbf{F},\vec{s}\right)$
+\end_inset
+
+-kernel basis.
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%We will need to use the following bound on the sizes of kernel bases
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%from 
+\backslash
+cite{za2012}.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%
+\backslash
+begin{thm}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%
+\backslash
+label{thm:boundOfSumOfShiftedDegreesOfKernelBasis}Suppose %$
+\backslash
+mathbf{F}
+\backslash
+in
+\backslash
+mathbb{K}
+\backslash
+left[x
+\backslash
+right]^{m
+\backslash
+times n}$
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%and $
+\backslash
+vec{s}
+\backslash
+in
+\backslash
+mathbb{Z}_{
+\backslash
+ge0}^{n}$ is a shift with entries bounding
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%the corresponding column degrees of $
+\backslash
+mathbf{F}$.
+ Then the sum of
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%the $
+\backslash
+vec{s}$-column degrees of any $
+\backslash
+vec{s}$-minimal kernel basis
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%of $
+\backslash
+mathbf{F}$ is bounded by $
+\backslash
+sum
+\backslash
+vec{s}$.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%
+\backslash
+end{thm}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%We will need the following result from 
+\backslash
+cite{za2012} to compute kernel bases by rows.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%
+\backslash
+begin{thm}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%
+\backslash
+label{thm:continueComputingKernelBasisByRows}Let $
+\backslash
+mathbf{G}=
+\backslash
+left[
+\backslash
+mathbf{G}_{1}^{T},%
+\backslash
+mathbf{G}_{2}^{T}
+\backslash
+right]^{T}
+\backslash
+in
+\backslash
+mathbb{K}
+\backslash
+left[x
+\backslash
+right]^{m
+\backslash
+times n}$
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%and $
+\backslash
+vec{t}
+\backslash
+in
+\backslash
+mathbb{Z}^{n}$ a shift vector.
+ If $
+\backslash
+mathbf{N}_{1}$
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%is a $
+\backslash
+left(
+\backslash
+mathbf{G}_{1},
+\backslash
+vec{t}
+\backslash
+right)$-kernel basis with $
+\backslash
+vec{t}$-column
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%degrees $
+\backslash
+vec{u}$, and $
+\backslash
+mathbf{N}_{2}$ is a $
+\backslash
+left(
+\backslash
+mathbf{G}_{2}
+\backslash
+mathbf{N}_{1},
+\backslash
+vec{u}
+\backslash
+right)$-%kernel
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%basis with $
+\backslash
+vec{u}$-column degrees $
+\backslash
+vec{v}$, then $
+\backslash
+mathbf{N}_{1}
+\backslash
+mathbf{N}_{2}$
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%is a $
+\backslash
+left(
+\backslash
+mathbf{G},
+\backslash
+vec{t}
+\backslash
+right)$-kernel basis $
+\backslash
+vec{t}$-column
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%degrees $
+\backslash
+vec{v}$.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%
+\backslash
+end{thm}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%
+\backslash
+subsection{Column Bases}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We will need the following result from 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "za2012"
+
+\end_inset
+
+ to bound the sizes of kernel bases.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:boundOfSumOfShiftedDegreesOfKernelBasis"
+
+\end_inset
+
+Suppose 
+\begin_inset Formula $\mathbf{F}\in\mathbb{K}\left[x\right]^{m\times n}$
+\end_inset
+
+ and 
+\begin_inset Formula $\vec{s}\in\mathbb{Z}_{\ge0}^{n}$
+\end_inset
+
+ is a shift with entries bounding the corresponding column degrees of 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+.
+ Then the sum of the 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+-column degrees of any 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+-minimal kernel basis of 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+ is bounded by 
+\begin_inset Formula $\sum\vec{s}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+A column basis of 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+ is a basis for the 
+\begin_inset Formula $\mathbb{K}\left[x\right]$
+\end_inset
+
+-module 
+\begin_inset Formula 
+\[
+\left\{ \mathbf{F}\mathbf{p}~|~\mathbf{p}\in\mathbb{K}\left[x\right]^{n}~\right\} ~.
+\]
+
+\end_inset
+
+ Such a basis can be represented as a full rank matrix 
+\begin_inset Formula $\mathbf{T}\in\mathbb{K}\left[x\right]^{m\times r}$
+\end_inset
+
+ whose columns are the basis elements.
+ A column basis is not unique and indeed any column basis right multiplied
+ by a unimodular polynomial matrix gives another column basis.
+\end_layout
+
+\begin_layout Standard
+The cost of kernel basis computation is given in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "za2012"
+
+\end_inset
+
+ while the cost of column basis computation is given in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "za2013"
+
+\end_inset
+
+.
+ In both cases they make heavy use of fast methods for order bases (often
+ also referred to as minimal approximant bases) 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "BeLa94,Giorgi2003,ZL2012"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:costGeneral"
+
+\end_inset
+
+ Let 
+\begin_inset Formula $\mathbf{F}\in\mathbb{K}\left[x\right]^{m\times n}$
+\end_inset
+
+ with 
+\begin_inset Formula $\vec{s}=\cdeg\mathbf{F}$
+\end_inset
+
+.
+ Then a 
+\begin_inset Formula $\left(\mathbf{F},\vec{s}\right)$
+\end_inset
+
+-kernel basis can be computed with a cost of 
+\begin_inset Formula $O^{\sim}\left(n^{\omega}s\right)$
+\end_inset
+
+field operations where 
+\begin_inset Formula $s=\sum\vec{s}/n$
+\end_inset
+
+ is the average column degree of 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset space ~
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:fastcolbasis"
+
+\end_inset
+
+ There exists a fast, deterministic algorithm for the computation of a column
+ basis of a matrix polynomial 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+ having complexity 
+\begin_inset Formula $O^{\sim}\left(nm^{\omega-1}s\right)$
+\end_inset
+
+ field operations in 
+\begin_inset Formula $\mathbb{K}$
+\end_inset
+
+ with 
+\begin_inset Formula $s$
+\end_inset
+
+ being the average average column degree of 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+.
+ In addition, the column basis computed has column degrees bounded by the
+ 
+\begin_inset Formula $r$
+\end_inset
+
+ largest column degrees of 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+, where 
+\begin_inset Formula $r$
+\end_inset
+
+ is the rank of 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Column bases and kernel bases are closely related, as shown by the following
+ result from 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "za2013,zhou:phd2012"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:unimodular_kernel_columnBasis"
+
+\end_inset
+
+ Let 
+\begin_inset Formula $\mathbf{F}\in\mathbb{K}\left[x\right]^{m\times n}$
+\end_inset
+
+ and suppose 
+\begin_inset Formula $\mathbf{U}\in\mathbb{K}\left[x\right]^{n\times n}$
+\end_inset
+
+ is a unimodular matrix such that 
+\begin_inset Formula $\mathbf{F}\mathbf{U}=\left[0,\mathbf{T}\right]$
+\end_inset
+
+ with 
+\begin_inset Formula $\mathbf{T}$
+\end_inset
+
+ of full column rank.
+ Partition 
+\begin_inset Formula $\mathbf{U}=\left[\mathbf{U}_{L},\mathbf{U}_{R}\right]$
+\end_inset
+
+ such that 
+\begin_inset Formula $\mathbf{F}\cdot\mathbf{U}_{L}=0$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{F}\mathbf{U}_{R}=\mathbf{T}$
+\end_inset
+
+.
+ Then 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $\mathbf{U}_{L}$
+\end_inset
+
+ is a kernel basis of 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{T}$
+\end_inset
+
+ is a column basis of
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Enumerate
+If 
+\begin_inset Formula $\mathbf{N}$
+\end_inset
+
+ is any other kernel basis of 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+, then 
+\begin_inset Formula $\mathbf{U}^{*}=\left[\mathbf{N},~\mathbf{U}_{R}\right]$
+\end_inset
+
+ is also unimodular and also unimodularly transforms 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+ to 
+\begin_inset Formula $\left[0,\mathbf{T}\right]$
+\end_inset
+
+.
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset space ~
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:colBasisdegreeBoundByRdegOfRightFactor"
+
+\end_inset
+
+A column basis 
+\begin_inset Formula $\mathbf{T}$
+\end_inset
+
+ of 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+ computed using the algorithm 
+\end_layout
+
+\begin_layout Lemma
+and 
+\begin_inset Formula $\mathbf{G}$
+\end_inset
+
+ be as before and 
+\begin_inset Formula $\vec{t}=-\rdeg_{-\vec{s}}\mathbf{G}$
+\end_inset
+
+.
+ Then 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[(i)]
+\end_layout
+
+\end_inset
+
+ the column degrees of 
+\begin_inset Formula $\mathbf{T}$
+\end_inset
+
+ are bounded by the corresponding entries of 
+\begin_inset Formula $\vec{t}$
+\end_inset
+
+; 
+\end_layout
+
+\begin_layout Itemize
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[(ii)]
+\end_layout
+
+\end_inset
+
+ if 
+\begin_inset Formula $\vec{t}$
+\end_inset
+
+ has 
+\begin_inset Formula $r$
+\end_inset
+
+ entries and 
+\begin_inset Formula $\vec{s}^{~\prime}$
+\end_inset
+
+ is the list of the 
+\begin_inset Formula $r$
+\end_inset
+
+ largest entries of 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+, then 
+\begin_inset Formula $\vec{t}\le\vec{s}^{~\prime}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+Example
+\end_layout
+
+\begin_layout Example*
+\begin_inset CommandInset label
+LatexCommand label
+name "ex:example1"
+
+\end_inset
+
+ Let 
+\begin_inset Formula 
+\[
+\mathbf{F}=\left[\begin{array}{rcrcr}
+x & -{x}^{3} & -2\,{x}^{4} & 2x & -{x}^{2}\\
+\noalign{\medskip}1 & -1 & -2\, x & 2 & -x\\
+\noalign{\medskip}-3 & 3\,{x}^{2}+x & 2\,{x}^{2} & -\,{x}^{4}+1 & 3\, x
+\end{array}\right]
+\]
+
+\end_inset
+
+ be a 
+\begin_inset Formula $3\times5$
+\end_inset
+
+ matrix over 
+\begin_inset Formula $\mathbb{Z}_{7}[x]$
+\end_inset
+
+ having column degree 
+\begin_inset Formula $\vec{s}=(1,3,4,4,2)$
+\end_inset
+
+.
+ Then a column space, 
+\begin_inset Formula $\mathbf{G}$
+\end_inset
+
+, and a kernel basis, 
+\begin_inset Formula $\mathbf{N}$
+\end_inset
+
+, of 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+ are given by 
+\begin_inset Formula 
+\[
+\mathbf{G}=\left[\begin{array}{rcr}
+x & -{x}^{3} & -2\,{x}^{4}\\
+\noalign{\medskip}1 & -1 & -2\, x\\
+\noalign{\medskip}-3 & 3\,{x}^{2}+x & 2\,{x}^{2}
+\end{array}\right]~~\mbox{ and }~~\mathbf{N}:=\left[\begin{array}{rc}
+-1 & x\\
+\noalign{\medskip}-{x}^{2} & 0\\
+\noalign{\medskip}-3\, x & 0\\
+\noalign{\medskip}-3 & 0\\
+\noalign{\medskip}0 & 1
+\end{array}\right]~.
+\]
+
+\end_inset
+
+ For example, if 
+\begin_inset Formula $\{\mathbf{g}_{i}\}_{i=1,...,5}$
+\end_inset
+
+ denote the columns of 
+\begin_inset Formula $\mathbf{G}$
+\end_inset
+
+ then column 
+\begin_inset Formula $4$
+\end_inset
+
+ of 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
+ - denoted by 
+\begin_inset Formula $\mathbf{f}_{4}$
+\end_inset
+
+ - is given by 
+\begin_inset Formula 
+\[
+\mathbf{f}_{4}=-2~\mathbf{g}_{1}-2x^{2}~\mathbf{g}_{2}+x~\mathbf{g}_{3}+2~\mathbf{g}_{4}.
+\]
+
+\end_inset
+
+ Here 
+\begin_inset Formula $\cdeg_{\vec{s}}\mathbf{N}=(5,2)$
+\end_inset
+
+ with shifted leading coefficient matrix 
+\begin_inset Formula 
+\[
+\mbox{lcoeff}_{\vec{s}}(\mathbf{N})=\left[\begin{array}{rc}
+0 & 1\\
+-1 & 0\\
+-3 & 0\\
+0 & 0\\
+0 & 1
+\end{array}\right].
+\]
+
+\end_inset
+
+ Since 
+\begin_inset Formula $\mbox{ lcoeff}_{\vec{s}}(\mathbf{N})$
+\end_inset
+
+ has full rank we have that 
+\begin_inset Formula $\mathbf{N}$
+\end_inset
+
+ is a 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+-minimal kernel basis.
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+qed
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\end_body
+\end_document
