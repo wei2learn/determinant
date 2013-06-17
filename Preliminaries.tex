@@ -10,7 +10,7 @@ of polynomials. These will be the building blocks used in our algorithm.
 \subsection{Shifted Degrees}
 
 Our methods makes use of the concept of {\em shifted} degrees of
-polynomial matrices \citet{BLV:1999}, basically shifting the importance
+polynomial matrices \citep{BLV:1999}, basically shifting the importance
 of the degrees in some of the rows of a basis. For a column vector
 $\mathbf{p}=\left[p_{1},\dots,p_{n}\right]^{T}$ of univariate polynomials
 over a field $\mathbb{K}$, its column degree, denoted by $\cdeg\mathbf{p}$,
@@ -46,7 +46,7 @@ is defined similarly as
 \rdeg_{\vec{s}}\mathbf{q}=\max_{1\le i\le n}[\deg q_{i}+s_{i}]=\deg(\mathbf{q}\cdot x^{\vec{s}}).
 \]
  Shifted degrees have been used previously in polynomial matrix computations
-and in generalizations of some matrix normal forms \citet{BLV:jsc06}.
+and in generalizations of some matrix normal forms \citep{BLV:jsc06}.
 The shifted column degree is equivalent to the notion of \emph{defect}
 commonly used in the literature.
 
@@ -62,10 +62,10 @@ reduced if $x^{\vec{s}}\mathbf{F}$ is column reduced. A similar concept
 exists for being shifted row reduced.
 
 The usefulness of the shifted degrees can be seen from their applications
-in polynomial matrix computation problems \citet{ZL2012,za2012}.
-One of its uses is illustrated by the following lemma from \citet[Chapter 2]{zhou:phd2012},
+in polynomial matrix computation problems \citep{ZL2012,za2012}.
+One of its uses is illustrated by the following lemma from \citep[Chapter 2]{zhou:phd2012},
 which can be viewed as a stronger version of the predictable-degree
-property \citet[page 387]{kailath:1980}. For completeness we also
+property \citep[page 387]{kailath:1980}. For completeness we also
 include the proof. 
 \begin{lem}
 \label{lem:predictableDegree} Let $\mathbf{A}\in\mathbb{K}\left[x\right]^{m\times n}$
@@ -88,7 +88,7 @@ has column degree $\vec{0}$.
 \end{proof}
 An essential fact needed in this paper, also based on the use of shifted
 degrees, is the efficient multiplication of matrices with unbalanced
-degrees \citet[Theorem 3.7]{za2012}. 
+degrees \citep[Theorem 3.7]{za2012}. 
 \begin{thm}
 \label{thm:multiplyUnbalancedMatrices} Let $\mathbf{A}\in\mathbb{K}\left[x\right]^{m\times n}$
 with $m\le n$, $\vec{s}\in\mathbb{Z}^{n}$ a shift with entries bounding
@@ -164,7 +164,7 @@ $\mathbf{F}$ a $\left(\mathbf{F},\vec{s}\right)$-kernel basis.
 %\subsection{Column Bases}
 
 
-We will need the following result from \citet{za2012} to bound the
+We will need the following result from \citep{za2012} to bound the
 sizes of kernel bases.
 \begin{thm}
 \label{thm:boundOfSumOfShiftedDegreesOfKernelBasis}Suppose $\mathbf{F}\in\mathbb{K}\left[x\right]^{m\times n}$
@@ -182,10 +182,10 @@ whose columns are the basis elements. A column basis is not unique
 and indeed any column basis right multiplied by a unimodular polynomial
 matrix gives another column basis.
 
-The cost of kernel basis computation is given in \citet{za2012} while
-the cost of column basis computation is given in \citet{za2013}.
+The cost of kernel basis computation is given in \citep{za2012} while
+the cost of column basis computation is given in \citep{za2013}.
 In both cases they make heavy use of fast methods for order bases
-(often also referred to as minimal approximant bases) \citet{BeLa94,Giorgi2003,ZL2012}.
+(often also referred to as minimal approximant bases) \citep{BeLa94,Giorgi2003,ZL2012}.
 \begin{thm}
 \label{thm:costGeneral} Let $\mathbf{F}\in\mathbb{K}\left[x\right]^{m\times n}$
 with $\vec{s}=\cdeg\mathbf{F}$. Then a $\left(\mathbf{F},\vec{s}\right)$-kernel
@@ -236,7 +236,7 @@ the list of the $r$ largest entries of $\vec{s}$, then $\vec{t}\le\vec{s}^{~\pri
 \end{lem}
 
 \subsection{Example}
-\begin{example*}
+\begin{example}
 \label{ex:example1} Let 
 \[
 \mathbf{F}=\left[\begin{array}{rcrcr}
@@ -279,5 +279,5 @@ matrix
 \end{array}\right].
 \]
  Since $\mbox{ lcoeff}_{\vec{s}}(\mathbf{N})$ has full rank we have
-that $\mathbf{N}$ is a $\vec{s}$-minimal kernel basis. \qed \end{example*}
+that $\mathbf{N}$ is a $\vec{s}$-minimal kernel basis. \qed \end{example}
 

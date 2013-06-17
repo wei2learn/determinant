@@ -38,7 +38,7 @@ figs-within-sections
 \use_esint 1
 \use_mhchem 0
 \use_mathdots 1
-\cite_engine natbib_authoryear
+\cite_engine natbib_numerical
 \use_bibtopic false
 \use_indices false
 \paperorientation portrait
@@ -765,7 +765,7 @@ x & -{x}^{3} & -2\,{x}^{4}\\
  were given in Example 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "example1"
+reference "ex:example1"
 
 \end_inset
 

@@ -9,7 +9,7 @@
 \usepackage{float}
 \usepackage{amsthm}
 \usepackage{amssymb}
-\usepackage[authoryear]{natbib}
+\usepackage[numbers]{natbib}
 
 \makeatletter
 
@@ -28,11 +28,9 @@
   \theoremstyle{definition}
   \newtheorem{defn}[thm]{\protect\definitionname}
   \theoremstyle{definition}
-  \newtheorem*{example*}{\protect\examplename}
+  \newtheorem{example}[thm]{\protect\examplename}
   \theoremstyle{remark}
   \newtheorem{rem}[thm]{\protect\remarkname}
-  \theoremstyle{definition}
-  \newtheorem{example}[thm]{\protect\examplename}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
 

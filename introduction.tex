@@ -21,14 +21,14 @@ context of triangularizing integer matrices.
 
 There has been considerable work on fast algorithms for Hermite form
 computation. This includes $O^{\sim}\left(n^{4}d\right)$ algorithms
-from Hafner and McCurley \citet{hafner} and Iliopoulos \citet{iliopoulos}
+from Hafner and McCurley \citep{hafner} and Iliopoulos \citep{iliopoulos}
 which control intermediate size by working modulo the determinant.
-Hafner and McCurley \citet{hafner}, Storjohann and Labahn \citet{storjohann-labahn96}
-and Villard \citet{villard96} gave new algorithms which reduced the
+Hafner and McCurley \citep{hafner}, Storjohann and Labahn \citep{storjohann-labahn96}
+and Villard \citep{villard96} gave new algorithms which reduced the
 cost to $O^{\sim}\left(n^{\omega+1}d\right)$ operations, with $2<\omega<3$
 being the exponent of matrix multiplication. The second named worked
 with integer matrices but the results carried over directly to polynomial
-matrices. Mulders and Storjohann \citet{mulders-storjohann:2003}
+matrices. Mulders and Storjohann \citep{mulders-storjohann:2003}
 gave an iterative algorithm having complexity $O\left(n^{3}d^{2}\right)$,
 thus reducing the exponent of $n$ at the cost of increasing the exponent
 of the degree $d$.
@@ -38,11 +38,11 @@ computes the Hermite form in the time it takes to multiply two polynomial
 matrices having the same size $n$ and degree $d$ as the input matrix,
 namely at a cost $O^{\sim}\left(n^{\omega}d\right)$. Such algorithms
 already exist for a number of other polynomial matrix problems. This
-included probabalistic algorithms for example linear solving \citet{mulders-storjohann:2003},
-row reduction \citet{Giorgi2003} and polynomial matrix inversion
-\citet{jeannerod-villard:05} and later deterministic algorithms for
-linear solving and row reduction \citet{GSSV2012}. In the case of
-Hermite normal form computation Gupta and Storjohann \citet{GS2011}
+included probabalistic algorithms for example linear solving \citep{mulders-storjohann:2003},
+row reduction \citep{Giorgi2003} and polynomial matrix inversion
+\citep{jeannerod-villard:05} and later deterministic algorithms for
+linear solving and row reduction \citep{GSSV2012}. In the case of
+Hermite normal form computation Gupta and Storjohann \citep{GS2011}
 gave an algorithm which reduced the complexity to $O^{\sim}\left(n^{3}d\right)$.
 Their algorithm is randomized of Las Vegas type rather than deterministic.
 
@@ -54,7 +54,7 @@ While Gupta and Storjohann use the Smith normal form to determine
 the diagonal entries our approach is to make use of fast, deterministic
 methods forshifted minimal kernel basis and column basis computation.
 The use of shifted minimal kernel bases for matrix normal form computation
-was previously used in \citet{BLV:1999,BLV:jsc06} in order to obtain
+was previously used in \citep{BLV:1999,BLV:jsc06} in order to obtain
 efficient algorithms in the case where intermediate coefficient growth
 is a concern.
 
@@ -65,7 +65,7 @@ modifying the diagonal algorithm we are also able to give as a corollary
 a $O^{\sim}\left(n^{\omega-1}s\right)$ deterministic algorithm for
 finding the determinant of $\mathbf{F}$. This compares to the $O^{\sim}\left(n^{\omega}d\right)$
 cost for the Las Vegas determinant algorithm of Storjohann given in
-\citet{storjohann:2002,storjohann:2003}
+\citep{storjohann:2002,storjohann:2003}
 
 The remainder of this paper is organized as follows. In the next section
 we give preliminary information for shifted degrees, kernel and column
