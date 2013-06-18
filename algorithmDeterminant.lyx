@@ -157,36 +157,6 @@ the determinant of
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Flex STATE
-status open
-
-\begin_layout Plain Layout
-\begin_inset Formula $\begin{bmatrix}\mathbf{F}_{U}\\
-\mathbf{F}_{D}
-\end{bmatrix}:=\mathbf{F}$
-\end_inset
-
-, with 
-\begin_inset Formula $\mathbf{F}_{U}$
-\end_inset
-
- consists of the top 
-\begin_inset Formula $\left\lceil n/2\right\rceil $
-\end_inset
-
- rows of 
-\begin_inset Formula $\mathbf{F}$
-\end_inset
-
-;
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
 \begin_inset Note Note
 status collapsed
 
@@ -253,6 +223,36 @@ return
 \series bold
 endif
 \series default
+;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Flex STATE
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{bmatrix}\mathbf{F}_{U}\\
+\mathbf{F}_{D}
+\end{bmatrix}:=\mathbf{F}$
+\end_inset
+
+, with 
+\begin_inset Formula $\mathbf{F}_{U}$
+\end_inset
+
+ consists of the top 
+\begin_inset Formula $\left\lceil n/2\right\rceil $
+\end_inset
+
+ rows of 
+\begin_inset Formula $\mathbf{F}$
+\end_inset
+
 ;
 \end_layout
 
@@ -384,7 +384,7 @@ status open
 \begin_inset Flex STATE
 status open
 
-\begin_layout Lemma
+\begin_layout Plain Layout
 compute 
 \begin_inset Formula $U_{L}^{*}\in\mathbb{K}^{n\times k}$
 \end_inset

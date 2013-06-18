@@ -8,14 +8,14 @@
 
 \ENSURE{the determinant of $\mathbf{F}$.}
 
+
+
+\STATE{\textbf{if }$n=1$ \textbf{then} \textbf{return} $\mathbf{F}$; \textbf{endif};}
+
 \STATE{$\begin{bmatrix}\mathbf{F}_{U}\\
 \mathbf{F}_{D}
 \end{bmatrix}:=\mathbf{F}$, with $\mathbf{F}_{U}$ consists of the top $\left\lceil n/2\right\rceil $
 rows of $\mathbf{F}$;}
-
-
-
-\STATE{\textbf{if }$n=1$ \textbf{then} \textbf{return} $\mathbf{F}$; \textbf{endif};}
 
 \STATE{$\mathbf{G}_{1},\mathbf{U}_{R},\mathbf{V}_{U}:=\colBasis(\mathbf{F}_{U})$;
 (Here we make $\colBasis()$ also return the kernel basis and the
@@ -29,10 +29,8 @@ right factor it computed.)}
 
 \STATE{$U_{R}:=\mathbf{U}_{R}\mod x$; $V_{U}:=\mathbf{V}_{U}\mod x$;}
 
-\STATE{\begin{lem}
-compute $U_{L}^{*}\in\mathbb{K}^{n\times k}$ , a matrix that makes
-the matrix $U^{*}=\left[U_{L}^{*},U_{R}\right]$ unimodular;\end{lem}
-}
+\STATE{compute $U_{L}^{*}\in\mathbb{K}^{n\times k}$ , a matrix that makes
+the matrix $U^{*}=\left[U_{L}^{*},U_{R}\right]$ unimodular;}
 
 \STATE{$d_{V}:=\det\left(V_{U}U_{L}^{*}\right)/\det(U^{*};$}
 
